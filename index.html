@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>80% of Qur'anic Words</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal:#0D7377; --dark-teal:#0A5C5E; --gold:#C49A2B; --deep-gold:#A8841F;
+  --cream:#FFF8E7; --dark-bg:#1A3636; --light-teal:#E0F2F1;
+  --green:#2E7D32; --red:#C62828; --fs:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'IBM Plex Sans',sans-serif;background:#f0f4f4;color:#333;min-height:100vh;font-size:var(--fs);}
+.arabic{font-family:'Amiri','Traditional Arabic',serif;direction:rtl;line-height:1.8;}
+
+/* NAV */
+.nav-bar{position:sticky;top:0;z-index:100;background:var(--dark-bg);display:flex;overflow-x:auto;gap:2px;padding:8px 8px 0;scrollbar-width:none;}
+.nav-bar::-webkit-scrollbar{display:none;}
+.nav-tab{flex-shrink:0;padding:10px 14px;background:rgba(255,255,255,0.08);color:#88BBBB;border:none;cursor:pointer;border-radius:10px 10px 0 0;font-size:13px;font-weight:500;transition:all 0.2s;white-space:nowrap;}
+.nav-tab.active{background:var(--gold);color:white;font-weight:700;}
+
+.app{max-width:540px;margin:0 auto;padding:14px 13px 80px;}
+
+/* HERO with Quran bg */
+.hero{border-radius:18px;overflow:hidden;margin-bottom:14px;position:relative;}
+.hero-bg{
+  background: linear-gradient(rgba(10,30,30,0.82), rgba(10,30,30,0.88)),
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Quran_okela.jpg/800px-Quran_okela.jpg') center/cover no-repeat;
+  padding:36px 22px 28px;
+  text-align:center;
+}
+.hero-bismillah{font-family:'Amiri',serif;color:var(--gold);font-size:28px;direction:rtl;margin-bottom:10px;}
+.hero h1{color:white;font-size:22px;font-weight:700;margin-bottom:6px;}
+.hero .sub{color:#88BBBB;font-size:14px;line-height:1.6;}
+
+/* SLIDES */
+.slide-wrap{position:relative;}
+.slide{
+  border-radius:16px;overflow:hidden;margin-bottom:10px;
+  background:linear-gradient(rgba(10,30,30,0.87),rgba(10,30,30,0.92)),
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Koran_x.jpg/800px-Koran_x.jpg') center/cover no-repeat;
+  padding:28px 20px;min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+}
+.slide-nav{display:flex;gap:10px;justify-content:center;margin-top:8px;}
+.slide-nav button{padding:10px 22px;border:none;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;}
+.slide-nav .prev{background:#eee;color:#555;}
+.slide-nav .next{background:var(--gold);color:white;}
+.slide-nav button:disabled{opacity:0.35;cursor:default;}
+.slide-dots{display:flex;gap:5px;justify-content:center;margin-top:8px;}
+.dot{width:7px;height:7px;border-radius:50%;background:#ccc;transition:all 0.2s;}
+.dot.active{background:var(--gold);width:20px;border-radius:4px;}
+
+/* CARDS */
+.card{background:white;border-radius:14px;padding:16px;margin-bottom:10px;border-left:4px solid var(--gold);}
+.card.teal{border-left-color:var(--teal);}
+.card h3{color:var(--dark-teal);font-size:15px;font-weight:700;margin-bottom:8px;}
+.card p{color:#555;font-size:14px;line-height:1.75;}
+
+/* STAT BOXES */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;}
+.stat-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;width:100%;}
+.sbox{background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 6px;text-align:center;}
+.sbox .n{color:var(--gold);font-size:19px;font-weight:700;line-height:1.2;}
+.sbox .l{color:#88BBBB;font-size:11px;margin-top:3px;line-height:1.4;}
+
+/* DAY TAB */
+.day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px;}
+.day-btn{padding:10px 4px;border:2px solid #ddd;border-radius:10px;background:white;cursor:pointer;text-align:center;font-size:13px;color:#666;font-weight:500;transition:all 0.2s;}
+.day-btn.active{border-color:var(--teal);background:var(--teal);color:white;font-weight:700;}
+.day-words-card{
+  border-radius:14px;padding:16px;margin-bottom:12px;
+  background:linear-gradient(rgba(255,248,231,0.97),rgba(255,248,231,0.97)),
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Quran_okela.jpg/800px-Quran_okela.jpg') center/cover;
+  border:2px solid var(--gold);
+}
+.word-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(196,154,43,0.2);}
+.word-row:last-child{border-bottom:none;}
+.word-row .eng{font-size:14px;color:#333;}
+.word-row .translit{font-size:12px;color:#aaa;margin-left:4px;font-style:italic;}
+.word-row .arb{font-family:'Amiri',serif;font-size:26px;color:var(--teal);direction:rtl;}
+.day-actions{display:flex;gap:10px;}
+.day-actions button{flex:1;padding:13px;border:none;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;}
+.day-actions .quiz-day{background:var(--teal);color:white;}
+.day-actions .flash-day{background:var(--gold);color:white;}
+
+/* LEARN */
+.cat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.cat-pill{padding:7px 14px;border-radius:20px;font-size:13px;cursor:pointer;border:none;font-weight:500;background:#e8f0f0;color:var(--teal);transition:all 0.15s;}
+.cat-pill.active{background:var(--teal);color:white;font-weight:700;}
+.browse-list{border-radius:10px;border:1px solid #e0e0e0;overflow:hidden;}
+.browse-item{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid #f0f0f0;background:white;}
+.browse-item:nth-child(even){background:#fafafa;}
+.browse-item:last-child{border-bottom:none;}
+.browse-item .eng-col{font-size:14px;color:#333;}
+.browse-item .arb-col{font-family:'Amiri',serif;font-size:28px;color:var(--teal);direction:rtl;}
+
+/* QUIZ */
+.progress-bar{width:100%;height:5px;background:#e0e0e0;border-radius:3px;margin-bottom:12px;overflow:hidden;}
+.progress-bar .fill{height:100%;background:var(--teal);border-radius:3px;transition:width 0.35s;}
+.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.quiz-prompt{
+  border-radius:14px;padding:32px 20px;text-align:center;margin-bottom:14px;
+  background:linear-gradient(rgba(10,30,30,0.9),rgba(10,30,30,0.93)),
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Koran_x.jpg/800px-Koran_x.jpg') center/cover;
+}
+.quiz-prompt .qlabel{color:#88BBBB;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.quiz-prompt .qword{color:var(--gold);font-size:40px;font-weight:700;line-height:1.4;}
+.quiz-prompt .qword.eng{font-size:20px;direction:ltr;}
+.quiz-prompt .qtranslit{color:#88BBBB;font-size:14px;font-style:italic;margin-top:6px;}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.option-btn{padding:16px 10px;border:2px solid #ddd;border-radius:12px;background:white;cursor:pointer;font-size:15px;color:#333;transition:all 0.2s;min-height:58px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.4;}
+.option-btn.arabic-opt{font-family:'Amiri',serif;font-size:28px;direction:rtl;color:var(--teal);}
+.option-btn.correct{background:#E8F5E9;border-color:#4CAF50;color:var(--green);font-weight:700;}
+.option-btn.wrong{background:#FFEBEE;border-color:#E53935;color:var(--red);}
+.option-btn:disabled{cursor:default;}
+
+/* FLASHCARD */
+.flashcard{border-radius:18px;padding:48px 22px;text-align:center;cursor:pointer;min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.3s;user-select:none;}
+.flashcard.front{
+  background:linear-gradient(rgba(10,30,30,0.88),rgba(10,30,30,0.92)),
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Quran_okela.jpg/800px-Quran_okela.jpg') center/cover;
+}
+.flashcard.back{background:var(--cream);border:2px solid var(--gold);}
+.flashcard .f-arabic{font-family:'Amiri',serif;color:var(--gold);font-size:52px;direction:rtl;margin-bottom:10px;line-height:1.4;}
+.flashcard .f-hint{color:#88BBBB;font-size:14px;}
+.flashcard .f-english{color:var(--dark-teal);font-size:26px;font-weight:700;margin-bottom:8px;}
+.flashcard .f-translit{color:#888;font-size:14px;font-style:italic;}
+.flashcard .f-freq{color:#aaa;font-size:13px;margin-top:6px;}
+.flash-actions{display:flex;gap:10px;margin-top:12px;}
+.flash-actions button{flex:1;padding:14px;border:none;border-radius:12px;cursor:pointer;font-size:15px;font-weight:700;}
+.flash-actions .still{background:#FFEBEE;color:var(--red);}
+.flash-actions .got{background:#E8F5E9;color:var(--green);}
+
+/* RESULTS */
+.results{text-align:center;padding:34px 16px;}
+.results .emoji{font-size:56px;margin-bottom:10px;}
+.results .sc{color:var(--teal);font-size:34px;font-weight:700;}
+.results .msg{color:#666;font-size:15px;margin:6px 0 22px;line-height:1.6;}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{padding:13px 26px;background:var(--teal);color:white;border:none;border-radius:10px;cursor:pointer;font-size:15px;font-weight:700;}
+.btn-secondary{padding:13px 26px;background:white;color:var(--teal);border:2px solid var(--teal);border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;}
+.btn-back{width:100%;padding:13px;background:#eee;color:#666;border:none;border-radius:10px;cursor:pointer;font-size:14px;margin-top:12px;}
+
+/* PICKER */
+.cat-pick-grid{display:grid;gap:8px;}
+.cat-pick-btn{padding:14px 16px;border-radius:12px;cursor:pointer;font-size:14px;font-weight:500;border:2px solid var(--teal);background:white;color:var(--dark-teal);text-align:left;transition:all 0.15s;display:flex;justify-content:space-between;align-items:center;}
+.cat-pick-btn.gd{background:var(--gold);color:white;border-color:var(--gold);}
+.cat-pick-btn .cnt{font-size:12px;color:#aaa;font-weight:400;}
+.cat-pick-btn.gd .cnt{color:rgba(255,255,255,0.8);}
+.mode-toggle{display:flex;gap:8px;margin-bottom:12px;}
+.mode-btn{flex:1;padding:10px;border:2px solid #ddd;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;background:white;color:#555;}
+.mode-btn.active{border-color:var(--teal);background:var(--teal);color:white;font-weight:700;}
+.section-title{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px;}
+
+/* MUQATTAAT */
+.mq-card{background:white;border-radius:14px;padding:16px;margin-bottom:10px;border-left:4px solid var(--gold);box-shadow:0 1px 4px rgba(0,0,0,0.05);}
+.surah-pill{display:inline-block;background:#e8f0f0;color:var(--teal);border-radius:20px;padding:4px 11px;font-size:12px;margin:3px 3px 0 0;font-weight:500;}
+
+/* AYAH CARD */
+.ayah-card{
+  border-radius:14px;padding:18px;margin-bottom:10px;
+  background:linear-gradient(rgba(10,30,30,0.88),rgba(10,30,30,0.92)),
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Koran_x.jpg/800px-Koran_x.jpg') center/cover;
+}
+.ayah-arabic{font-family:'Amiri',serif;color:var(--gold);font-size:22px;direction:rtl;text-align:right;line-height:1.8;margin-bottom:10px;}
+.ayah-translation{color:#ccc;font-size:13px;line-height:1.7;font-style:italic;}
+.ayah-ref{color:var(--gold);font-size:12px;margin-top:6px;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="nav-bar">
+  <button class="nav-tab active" data-tab="present">🎤 Present</button>
+  <button class="nav-tab" data-tab="days">📅 Daily Plan</button>
+  <button class="nav-tab" data-tab="learn">📖 Learn</button>
+  <button class="nav-tab" data-tab="muqattaat">🔡 Muqaṭṭaʿāt</button>
+  <button class="nav-tab" data-tab="quiz">📝 Quiz</button>
+  <button class="nav-tab" data-tab="flash">🔄 Flashcards</button>
+</div>
+<div class="app" id="app"></div>
+
+<script>
+// ============================================================
+// FULL WORD DATABASE — sourced from Dr. Abdulraheem's booklet
+// ============================================================
+const allWords = [
+  // ── 1. DEMONSTRATIVES & RELATIVES ───────────────────────
+  {a:"هٰذَا",t:"hādhā",e:"this (masculine)",c:"Demonstratives & Relatives",f:null},
+  {a:"هٰذِهِ",t:"hādhihi",e:"this (feminine)",c:"Demonstratives & Relatives",f:null},
+  {a:"ذٰلِكَ",t:"dhālika",e:"that (masculine)",c:"Demonstratives & Relatives",f:null},
+  {a:"تِلْكَ",t:"tilka",e:"that (feminine)",c:"Demonstratives & Relatives",f:null},
+  {a:"هٰؤُلَاءِ",t:"hāʾulāʾi",e:"these (m/f)",c:"Demonstratives & Relatives",f:null},
+  {a:"أُولٰئِكَ",t:"ulāʾika",e:"those (m/f)",c:"Demonstratives & Relatives",f:null},
+  {a:"الَّذِيْ",t:"alladhī",e:"he who / the one who (m.)",c:"Demonstratives & Relatives",f:null},
+  {a:"الَّتِيْ",t:"allatī",e:"she who (f.)",c:"Demonstratives & Relatives",f:null},
+  {a:"الَّذِيْنَ",t:"alladhīna",e:"those who (m. plural)",c:"Demonstratives & Relatives",f:null},
+  {a:"اللَّاتِيْ",t:"allātī",e:"those who (f. broken pl.)",c:"Demonstratives & Relatives",f:null},
+
+  // ── 2. NEGATION ─────────────────────────────────────────
+  {a:"لَا إِلٰهَ",t:"lā ilāha",e:"(there is) no god",c:"Negation",f:null},
+  {a:"إِلَّا اللّٰه",t:"illallāh",e:"except Allah",c:"Negation",f:null},
+  {a:"كَلَّا",t:"kallā",e:"never, certainly not",c:"Negation",f:null},
+  {a:"لَنْ",t:"lan",e:"will not (future)",c:"Negation",f:null},
+  {a:"لَمْ",t:"lam",e:"did not (past)",c:"Negation",f:null},
+  {a:"مَا",t:"mā",e:"not / what / that which",c:"Negation",f:null},
+  {a:"لَيْسَ",t:"laysa",e:"is not (m.)",c:"Negation",f:null},
+  {a:"غَيْرُ",t:"ghayru",e:"not, other than",c:"Negation",f:null},
+  {a:"دُوْنَ",t:"dūna",e:"besides; less than",c:"Negation",f:null},
+  {a:"إِلَّا",t:"illā",e:"except; unless; if not",c:"Negation",f:null},
+  {a:"بَلٰى",t:"balā",e:"yes, indeed (after neg.)",c:"Negation",f:null},
+  {a:"نَعَمْ",t:"naʿam",e:"yes",c:"Negation",f:null},
+
+  // ── 3. PRONOUNS ─────────────────────────────────────────
+  {a:"هُوَ",t:"huwa",e:"he",c:"Pronouns",f:null},
+  {a:"هِيَ",t:"hiya",e:"she",c:"Pronouns",f:null},
+  {a:"هُمْ",t:"hum",e:"they (masculine)",c:"Pronouns",f:null},
+  {a:"هُنَّ",t:"hunna",e:"they (feminine)",c:"Pronouns",f:null},
+  {a:"هُمَا",t:"humā",e:"they two (dual)",c:"Pronouns",f:null},
+  {a:"أَنْتَ",t:"anta",e:"you (m. singular)",c:"Pronouns",f:null},
+  {a:"أَنْتِ",t:"anti",e:"you (f. singular)",c:"Pronouns",f:null},
+  {a:"أَنْتُمْ",t:"antum",e:"you all (masculine)",c:"Pronouns",f:null},
+  {a:"أَنْتُمَا",t:"antumā",e:"you two (dual)",c:"Pronouns",f:null},
+  {a:"أَنَا",t:"anā",e:"I",c:"Pronouns",f:null},
+  {a:"نَحْنُ",t:"naḥnu",e:"we",c:"Pronouns",f:null},
+  {a:"...هُ",t:"...hu",e:"his / him (suffix)",c:"Pronouns",f:null},
+  {a:"...هُمْ",t:"...hum",e:"their / them (suffix)",c:"Pronouns",f:null},
+  {a:"...كَ",t:"...ka",e:"your (m. suffix)",c:"Pronouns",f:null},
+  {a:"...كُمْ",t:"...kum",e:"your (pl. suffix)",c:"Pronouns",f:null},
+  {a:"...نَا",t:"...nā",e:"our / us (suffix)",c:"Pronouns",f:null},
+
+  // ── 4. QUESTIONS ────────────────────────────────────────
+  {a:"مَا",t:"mā",e:"what?, that which",c:"Questions",f:null},
+  {a:"مَنْ",t:"man",e:"who?, the one who",c:"Questions",f:null},
+  {a:"مَتٰى",t:"matā",e:"when?, the time when",c:"Questions",f:null},
+  {a:"أَيْنَ",t:"ayna",e:"where?",c:"Questions",f:null},
+  {a:"كَيْفَ",t:"kayfa",e:"how?",c:"Questions",f:null},
+  {a:"كَمْ",t:"kam",e:"how many?",c:"Questions",f:null},
+  {a:"أَيٌّ",t:"ayy",e:"which?",c:"Questions",f:null},
+  {a:"أَنّٰى",t:"annā",e:"where from?, why?",c:"Questions",f:null},
+  {a:"أَ، هَلْ",t:"a, hal",e:"Is? Am? Are? Do? Have?",c:"Questions",f:null},
+  {a:"مَاذَا",t:"mādhā",e:"what?",c:"Questions",f:null},
+  {a:"لِمَاذَا",t:"limādhā",e:"why?",c:"Questions",f:null},
+  {a:"لَوْ لَا",t:"lawlā",e:"if not; why not?",c:"Questions",f:null},
+
+  // ── 5. PREPOSITIONS ─────────────────────────────────────
+  {a:"بِ",t:"bi",e:"with, in, from...",c:"Prepositions",f:null},
+  {a:"عَنْ",t:"ʿan",e:"about, from",c:"Prepositions",f:null},
+  {a:"فِيْ",t:"fī",e:"in",c:"Prepositions",f:null},
+  {a:"كَ",t:"ka",e:"as, like",c:"Prepositions",f:null},
+  {a:"لِ، لَ",t:"li, la",e:"for, to",c:"Prepositions",f:null},
+  {a:"مِنْ",t:"min",e:"from",c:"Prepositions",f:null},
+  {a:"إِلٰى",t:"ilā",e:"towards, to",c:"Prepositions",f:null},
+  {a:"تَ",t:"ta",e:"by (oath)",c:"Prepositions",f:null},
+  {a:"حَتّٰى",t:"ḥattā",e:"until",c:"Prepositions",f:null},
+  {a:"عَلٰى",t:"ʿalā",e:"on, upon",c:"Prepositions",f:null},
+  {a:"مَعَ",t:"maʿa",e:"with",c:"Prepositions",f:null},
+  {a:"وَ",t:"wa",e:"and; by (oath)",c:"Prepositions",f:null},
+
+  // ── 6. TIME & PLACE ──────────────────────────────────────
+  {a:"فَوْقَ",t:"fawqa",e:"above, up",c:"Time & Place",f:null},
+  {a:"تَحْتَ",t:"taḥta",e:"under, beneath",c:"Time & Place",f:null},
+  {a:"بَيْنَ أَيْدِيْ",t:"bayna aydi",e:"in front of",c:"Time & Place",f:null},
+  {a:"خَلْفَ",t:"khalfa",e:"back, after",c:"Time & Place",f:null},
+  {a:"أَمَامَ",t:"amāma",e:"in front of",c:"Time & Place",f:null},
+  {a:"وَرَاءَ",t:"warāʾa",e:"behind",c:"Time & Place",f:null},
+  {a:"يَمِيْنَ",t:"yamīna",e:"right; oath",c:"Time & Place",f:null},
+  {a:"شِمَالَ",t:"shimāla",e:"left",c:"Time & Place",f:null},
+  {a:"بَيْنَ",t:"bayna",e:"between",c:"Time & Place",f:null},
+  {a:"حَوْلَ",t:"ḥawla",e:"around",c:"Time & Place",f:null},
+  {a:"حَيْثُ",t:"ḥaythu",e:"wherever",c:"Time & Place",f:null},
+  {a:"قَبْلَ",t:"qabla",e:"before",c:"Time & Place",f:null},
+  {a:"بَعْدَ",t:"baʿda",e:"after",c:"Time & Place",f:null},
+  {a:"حِيْنَ",t:"ḥīna",e:"time, period; at the time of",c:"Time & Place",f:null},
+  {a:"إِذْ",t:"idh",e:"when (past)",c:"Time & Place",f:null},
+  {a:"إِذَا",t:"idhā",e:"when (future)",c:"Time & Place",f:null},
+  {a:"ثُمَّ",t:"thumma",e:"then, thereafter",c:"Time & Place",f:null},
+  {a:"فَ",t:"fa",e:"then, thus, therefore",c:"Time & Place",f:null},
+  {a:"عِنْدَ",t:"ʿinda",e:"near, with",c:"Time & Place",f:null},
+
+  // ── 7. PARTICLES & CONNECTORS ────────────────────────────
+  {a:"ذُو",t:"dhū",e:"endowed with; owner of (m.)",c:"Particles & Connectors",f:null},
+  {a:"ذَاتُ",t:"dhātu",e:"endowed with; owner of (f.)",c:"Particles & Connectors",f:null},
+  {a:"أَهْلُ",t:"ahlu",e:"people of; relatives",c:"Particles & Connectors",f:null},
+  {a:"آلُ",t:"ālu",e:"family, people of",c:"Particles & Connectors",f:null},
+  {a:"أَلَا",t:"alā",e:"lo!; do not?, will not?",c:"Particles & Connectors",f:null},
+  {a:"نِعْمَ",t:"niʿma",e:"what an excellent...",c:"Particles & Connectors",f:null},
+  {a:"بِئْسَ",t:"biʾsa",e:"what an evil...",c:"Particles & Connectors",f:null},
+  {a:"مِثْلُ",t:"mithlu",e:"something similar",c:"Particles & Connectors",f:null},
+  {a:"بَلْ",t:"bal",e:"nay, rather, but, however",c:"Particles & Connectors",f:null},
+  {a:"أَوْ",t:"aw",e:"or",c:"Particles & Connectors",f:null},
+  {a:"أَمْ",t:"am",e:"or?",c:"Particles & Connectors",f:null},
+  {a:"إِنَّ",t:"inna",e:"verily, truly",c:"Particles & Connectors",f:null},
+  {a:"أَنَّ",t:"anna",e:"that (conjunction)",c:"Particles & Connectors",f:null},
+  {a:"كَأَنَّ",t:"kaʾanna",e:"as if",c:"Particles & Connectors",f:null},
+  {a:"لٰكِنَّ",t:"lākinna",e:"but, however",c:"Particles & Connectors",f:null},
+  {a:"لَعَلَّ",t:"laʿalla",e:"perhaps, may be",c:"Particles & Connectors",f:null},
+  {a:"أَنْ",t:"an",e:"that (purpose/result)",c:"Particles & Connectors",f:null},
+  {a:"إِنْ",t:"in",e:"if (conditional)",c:"Particles & Connectors",f:null},
+  {a:"إِيَّا",t:"iyyā",e:"alone (emphasis pronoun)",c:"Particles & Connectors",f:null},
+  {a:"عَسٰى",t:"ʿasā",e:"possibly, perhaps",c:"Particles & Connectors",f:null},
+  {a:"لَمَّا",t:"lammā",e:"when",c:"Particles & Connectors",f:null},
+  {a:"لَوْ",t:"law",e:"if (hypothetical)",c:"Particles & Connectors",f:null},
+  {a:"يَا أَيُّهَا",t:"yā ayyuhā",e:"O! (address)",c:"Particles & Connectors",f:null},
+  {a:"قَدْ",t:"qad",e:"indeed / has (emphasis)",c:"Particles & Connectors",f:null},
+  {a:"سَ",t:"sa",e:"will (near future prefix)",c:"Particles & Connectors",f:null},
+  {a:"سَوْفَ",t:"sawfa",e:"will (future)",c:"Particles & Connectors",f:null},
+  {a:"بَعْضُ",t:"baʿḍu",e:"some of",c:"Particles & Connectors",f:null},
+  {a:"كُلُّ",t:"kullu",e:"everyone; all",c:"Particles & Connectors",f:null},
+  {a:"الْ",t:"al",e:"the (definite article)",c:"Particles & Connectors",f:null},
+
+  // ── 8. ALLAH'S NAMES & ATTRIBUTES ───────────────────────
+  {a:"رَبٌّ",t:"rabb",e:"Lord, Sustainer",c:"Allah's Names & Attributes",f:970},
+  {a:"رَحْمٰنٌ",t:"raḥmān",e:"Most Compassionate",c:"Allah's Names & Attributes",f:57},
+  {a:"رَحِيْمٌ",t:"raḥīm",e:"Most Merciful",c:"Allah's Names & Attributes",f:182},
+  {a:"خَبِيْرٌ",t:"khabīr",e:"Ever-Aware, All-Informed",c:"Allah's Names & Attributes",f:45},
+  {a:"سَمِيْعٌ",t:"samīʿ",e:"All-Hearing",c:"Allah's Names & Attributes",f:47},
+  {a:"بَصِيْرٌ",t:"baṣīr",e:"All-Seeing",c:"Allah's Names & Attributes",f:53},
+  {a:"عَزِيْزٌ",t:"ʿazīz",e:"Almighty",c:"Allah's Names & Attributes",f:99},
+  {a:"حَكِيْمٌ",t:"ḥakīm",e:"All-Wise",c:"Allah's Names & Attributes",f:97},
+  {a:"غَفُوْرٌ",t:"ghafūr",e:"Most Forgiving",c:"Allah's Names & Attributes",f:91},
+  {a:"قَدِيْرٌ",t:"qadīr",e:"All-Powerful",c:"Allah's Names & Attributes",f:45},
+  {a:"عَلِيْمٌ",t:"ʿalīm",e:"All-Knowing",c:"Allah's Names & Attributes",f:162},
+  {a:"سَلَامٌ",t:"salām",e:"Peace (Al-Salām)",c:"Allah's Names & Attributes",f:42},
+  {a:"شَكُوْرٌ",t:"shakūr",e:"Most Grateful (Al-Shakūr)",c:"Allah's Names & Attributes",f:24},
+  {a:"تَوَّابٌ",t:"tawwāb",e:"Acceptor of Repentance",c:"Allah's Names & Attributes",f:11},
+  {a:"حَفِيْظٌ",t:"ḥafīẓ",e:"Guardian, Protector",c:"Allah's Names & Attributes",f:26},
+  {a:"حَكِيْمٌ",t:"ḥakīm",e:"All-Wise",c:"Allah's Names & Attributes",f:97},
+  {a:"حَلِيْمٌ",t:"ḥalīm",e:"Forbearing",c:"Allah's Names & Attributes",f:15},
+  {a:"حَمِيْدٌ",t:"ḥamīd",e:"Praiseworthy",c:"Allah's Names & Attributes",f:17},
+  {a:"وَكِيْلٌ",t:"wakīl",e:"Trustee, Disposer of affairs",c:"Allah's Names & Attributes",f:24},
+  {a:"نَصِيْرٌ",t:"naṣīr",e:"Strong Helper",c:"Allah's Names & Attributes",f:24},
+  {a:"نَذِيْرٌ",t:"nadhīr",e:"Warner",c:"Allah's Names & Attributes",f:44},
+  {a:"قَرِيْبٌ",t:"qarīb",e:"Near, Close",c:"Allah's Names & Attributes",f:26},
+  {a:"كَرِيْمٌ",t:"karīm",e:"Most Generous, Noble",c:"Allah's Names & Attributes",f:27},
+  {a:"لَطِيْفٌ",t:"laṭīf",e:"Subtle, Kind",c:"Allah's Names & Attributes",f:7},
+  {a:"عَظِيْمٌ",t:"ʿaẓīm",e:"Supreme, Great",c:"Allah's Names & Attributes",f:107},
+  {a:"أَمِيْنٌ",t:"amīn",e:"Trustworthy",c:"Allah's Names & Attributes",f:14},
+
+  // ── 9. FAITH & DĪN ──────────────────────────────────────
+  {a:"أَحَدٌ",t:"aḥad",e:"one (unique)",c:"Faith & Dīn",f:85},
+  {a:"إِلٰهٌ",t:"ilāh",e:"god, deity",c:"Faith & Dīn",f:34},
+  {a:"شَرِيْكٌ",t:"sharīk",e:"partner, associate",c:"Faith & Dīn",f:40},
+  {a:"شَهَادَةٌ",t:"shahādah",e:"testimony, witness",c:"Faith & Dīn",f:26},
+  {a:"عَرْشٌ",t:"ʿarsh",e:"throne",c:"Faith & Dīn",f:26},
+  {a:"عَهْدٌ",t:"ʿahd",e:"covenant, promise",c:"Faith & Dīn",f:29},
+  {a:"غَيْبٌ",t:"ghayb",e:"the unseen",c:"Faith & Dīn",f:49},
+  {a:"كِتَابٌ",t:"kitāb",e:"book, scripture",c:"Faith & Dīn",f:261},
+  {a:"كَلِمَةٌ",t:"kalimah",e:"word",c:"Faith & Dīn",f:42},
+  {a:"مَلَكٌ",t:"malak",e:"angel",c:"Faith & Dīn",f:88},
+  {a:"مِيْثَاقٌ",t:"mīthāq",e:"covenant, treaty",c:"Faith & Dīn",f:25},
+  {a:"وَاحِدٌ",t:"wāḥid",e:"one",c:"Faith & Dīn",f:61},
+  {a:"آيَةٌ",t:"āyah",e:"sign, verse",c:"Faith & Dīn",f:382},
+  {a:"بَيِّنَةٌ",t:"bayyinah",e:"clear evidence, proof",c:"Faith & Dīn",f:71},
+  {a:"قُرْآنٌ",t:"qurʾān",e:"Quran; recitation",c:"Faith & Dīn",f:70},
+  {a:"حَقٌّ",t:"ḥaqq",e:"truth, right",c:"Faith & Dīn",f:247},
+  {a:"تَقْوٰى",t:"taqwā",e:"God-consciousness, piety",c:"Faith & Dīn",f:17},
+  {a:"حِكْمَةٌ",t:"ḥikmah",e:"wisdom",c:"Faith & Dīn",f:20},
+  {a:"حَمْدٌ",t:"ḥamd",e:"praise, gratitude",c:"Faith & Dīn",f:43},
+  {a:"دِيْنٌ",t:"dīn",e:"religion, way of life, judgment",c:"Faith & Dīn",f:92},
+  {a:"إِيْمَانٌ",t:"īmān",e:"faith, belief",c:"Faith & Dīn",f:45},
+  {a:"إِسْلَامٌ",t:"islām",e:"submission to Allah",c:"Faith & Dīn",f:8},
+  {a:"صَلَاةٌ",t:"ṣalāh",e:"prayer",c:"Faith & Dīn",f:83},
+  {a:"زَكَاةٌ",t:"zakāh",e:"purifying charity",c:"Faith & Dīn",f:32},
+  {a:"صِيَامٌ",t:"ṣiyām",e:"fasting",c:"Faith & Dīn",f:8},
+  {a:"نُوْرٌ",t:"nūr",e:"light",c:"Faith & Dīn",f:43},
+  {a:"مُبِيْنٌ",t:"mubīn",e:"clear, manifest",c:"Faith & Dīn",f:119},
+  {a:"تَوْبَةٌ",t:"tawbah",e:"repentance",c:"Faith & Dīn",f:17},
+  {a:"دُعَاءٌ",t:"duʿāʾ",e:"supplication",c:"Faith & Dīn",f:13},
+  {a:"صَبْرٌ",t:"ṣabr",e:"patience, perseverance",c:"Faith & Dīn",f:45},
+
+  // ── 10. THE LAST DAY ─────────────────────────────────────
+  {a:"أَبَدًا",t:"abadan",e:"forever, ever",c:"The Last Day",f:28},
+  {a:"أَجْرٌ",t:"ajr",e:"reward",c:"The Last Day",f:105},
+  {a:"أَجَلٌ",t:"ajal",e:"appointed term",c:"The Last Day",f:52},
+  {a:"الْآخِرَةُ",t:"al-ākhirah",e:"the Hereafter",c:"The Last Day",f:115},
+  {a:"أَلِيْمٌ",t:"alīm",e:"painful",c:"The Last Day",f:72},
+  {a:"ثَوَابٌ",t:"thawāb",e:"reward (from Allah)",c:"The Last Day",f:13},
+  {a:"جَحِيْمٌ",t:"jaḥīm",e:"blazing hellfire",c:"The Last Day",f:26},
+  {a:"جَزَاءٌ",t:"jazāʾ",e:"recompense, reward",c:"The Last Day",f:42},
+  {a:"جَنَّةٌ",t:"jannah",e:"paradise, garden",c:"The Last Day",f:147},
+  {a:"جَهَنَّمُ",t:"jahannam",e:"hellfire",c:"The Last Day",f:77},
+  {a:"حِسَابٌ",t:"ḥisāb",e:"reckoning, account",c:"The Last Day",f:39},
+  {a:"سَاعَةٌ",t:"sāʿah",e:"the Hour (of Judgment)",c:"The Last Day",f:47},
+  {a:"صَاحِبٌ",t:"ṣāḥib",e:"companion, fellow",c:"The Last Day",f:94},
+  {a:"عَاقِبَةٌ",t:"ʿāqibah",e:"end, consequence",c:"The Last Day",f:32},
+  {a:"عَذَابٌ",t:"ʿadhāb",e:"torment, punishment",c:"The Last Day",f:332},
+  {a:"عِقَابٌ",t:"ʿiqāb",e:"chastisement (for sin)",c:"The Last Day",f:20},
+  {a:"قِيَامَةٌ",t:"qiyāmah",e:"resurrection",c:"The Last Day",f:70},
+  {a:"لِقَاءٌ",t:"liqāʾ",e:"meeting (with Allah)",c:"The Last Day",f:24},
+  {a:"نَارٌ",t:"nār",e:"fire, hellfire",c:"The Last Day",f:145},
+  {a:"نَهَرٌ",t:"nahr",e:"river (in Jannah)",c:"The Last Day",f:54},
+  {a:"وَيْلٌ",t:"wayl",e:"woe unto...",c:"The Last Day",f:40},
+  {a:"يَوْمٌ",t:"yawm",e:"day",c:"The Last Day",f:393},
+  {a:"يَوْمَئِذٍ",t:"yawmaʾidhin",e:"on that day",c:"The Last Day",f:70},
+  {a:"مَوْتٌ",t:"mawt",e:"death",c:"The Last Day",f:93},
+  {a:"مُسَمًّى",t:"musamman",e:"appointed, fixed",c:"The Last Day",f:21},
+
+  // ── 11. PROPHETS & ALLAH'S SIGNS ─────────────────────────
+  {a:"رَسُوْلٌ",t:"rasūl",e:"messenger",c:"Prophets & Signs",f:332},
+  {a:"نَبِيٌّ",t:"nabī",e:"prophet",c:"Prophets & Signs",f:75},
+  {a:"آدَمُ",t:"ādam",e:"Adam (عليه السلام)",c:"Prophets & Signs",f:25},
+  {a:"نُوْحٌ",t:"nūḥ",e:"Noah (عليه السلام)",c:"Prophets & Signs",f:43},
+  {a:"إِبْرَاهِيْمُ",t:"ibrāhīm",e:"Abraham (عليه السلام)",c:"Prophets & Signs",f:69},
+  {a:"إِسْمَاعِيْلُ",t:"ismāʿīl",e:"Ishmael (عليه السلام)",c:"Prophets & Signs",f:12},
+  {a:"إِسْحَاقُ",t:"isḥāq",e:"Isaac (عليه السلام)",c:"Prophets & Signs",f:17},
+  {a:"يَعْقُوْبُ",t:"yaʿqūb",e:"Jacob (عليه السلام)",c:"Prophets & Signs",f:16},
+  {a:"يُوْسُفُ",t:"yūsuf",e:"Joseph (عليه السلام)",c:"Prophets & Signs",f:27},
+  {a:"مُوْسٰى",t:"mūsā",e:"Moses (عليه السلام)",c:"Prophets & Signs",f:136},
+  {a:"عِيْسٰى",t:"ʿīsā",e:"Jesus (عليه السلام)",c:"Prophets & Signs",f:25},
+  {a:"مُحَمَّدٌ",t:"muḥammad",e:"Muhammad ﷺ",c:"Prophets & Signs",f:4},
+  {a:"دَاوُوْدُ",t:"dāwūd",e:"David (عليه السلام)",c:"Prophets & Signs",f:16},
+  {a:"سُلَيْمَانُ",t:"sulaymān",e:"Solomon (عليه السلام)",c:"Prophets & Signs",f:17},
+  {a:"هُوْدٌ",t:"hūd",e:"Hud (عليه السلام)",c:"Prophets & Signs",f:7},
+  {a:"صَالِحٌ",t:"ṣāliḥ",e:"Salih (عليه السلام)",c:"Prophets & Signs",f:9},
+  {a:"شَيْطَانٌ",t:"shayṭān",e:"Satan",c:"Prophets & Signs",f:88},
+  {a:"فِرْعَوْنُ",t:"firʿawn",e:"Pharaoh",c:"Prophets & Signs",f:74},
+  {a:"عَادٌ",t:"ʿād",e:"People of Hud",c:"Prophets & Signs",f:24},
+  {a:"ثَمُوْدُ",t:"thamūd",e:"People of Salih",c:"Prophets & Signs",f:26},
+  {a:"أَنْعَامٌ",t:"anʿām",e:"cattle",c:"Prophets & Signs",f:32},
+  {a:"جَبَلٌ",t:"jabal",e:"mountain",c:"Prophets & Signs",f:39},
+  {a:"بَحْرٌ",t:"baḥr",e:"sea, large river",c:"Prophets & Signs",f:38},
+  {a:"شَمْسٌ",t:"shams",e:"sun",c:"Prophets & Signs",f:33},
+  {a:"قَمَرٌ",t:"qamar",e:"moon",c:"Prophets & Signs",f:33},
+  {a:"لَيْلٌ",t:"layl",e:"night",c:"Prophets & Signs",f:80},
+  {a:"نَهَارٌ",t:"nahār",e:"daytime",c:"Prophets & Signs",f:57},
+  {a:"أَرْضٌ",t:"arḍ",e:"earth, land",c:"Prophets & Signs",f:461},
+  {a:"سَمَاءٌ",t:"samāʾ",e:"sky, heaven",c:"Prophets & Signs",f:310},
+
+  // ── 12. PEOPLE & FAMILY ──────────────────────────────────
+  {a:"أُمٌّ",t:"umm",e:"mother",c:"People & Family",f:35},
+  {a:"أَبٌ",t:"ab",e:"father",c:"People & Family",f:117},
+  {a:"زَوْجٌ",t:"zawj",e:"wife; husband; pair",c:"People & Family",f:76},
+  {a:"رَجُلٌ",t:"rajul",e:"man",c:"People & Family",f:57},
+  {a:"اِمْرَأَةٌ",t:"imraʾah",e:"woman",c:"People & Family",f:83},
+  {a:"وَلَدٌ",t:"walad",e:"child, son",c:"People & Family",f:56},
+  {a:"وَالِدٌ",t:"wālid",e:"father (parent)",c:"People & Family",f:20},
+  {a:"ذُرِّيَّةٌ",t:"dhurriyyah",e:"descendants, children",c:"People & Family",f:32},
+  {a:"اِبْنٌ",t:"ibn",e:"son",c:"People & Family",f:41},
+  {a:"بَنُوْنَ",t:"banūn",e:"sons",c:"People & Family",f:22},
+  {a:"أَخٌ",t:"akh",e:"brother",c:"People & Family",f:67},
+  {a:"إِخْوَانٌ",t:"ikhwān",e:"brothers (pl.)",c:"People & Family",f:22},
+  {a:"أُمَّةٌ",t:"ummah",e:"community, nation",c:"People & Family",f:64},
+  {a:"قَوْمٌ",t:"qawm",e:"people, nation",c:"People & Family",f:383},
+  {a:"إِنْسَانٌ",t:"insān",e:"human being",c:"People & Family",f:65},
+  {a:"نَاسٌ",t:"nās",e:"people, mankind",c:"People & Family",f:248},
+  {a:"ذَكَرٌ",t:"dhakar",e:"male",c:"People & Family",f:16},
+  {a:"أُنْثٰى",t:"unthā",e:"female",c:"People & Family",f:30},
+  {a:"عَبْدٌ",t:"ʿabd",e:"slave, servant",c:"People & Family",f:126},
+  {a:"عَدُوٌّ",t:"ʿaduww",e:"enemy",c:"People & Family",f:44},
+  {a:"كُفَّارٌ",t:"kuffār",e:"disbelievers",c:"People & Family",f:21},
+  {a:"وَلِيٌّ",t:"walī",e:"protecting friend, guardian",c:"People & Family",f:86},
+  {a:"مَلَأٌ",t:"malaʾ",e:"chiefs, leaders",c:"People & Family",f:22},
+
+  // ── 13. THE HUMAN SELF ───────────────────────────────────
+  {a:"وَجْهٌ",t:"wajh",e:"face, direction",c:"The Human Self",f:72},
+  {a:"عَيْنٌ",t:"ʿayn",e:"eye; spring",c:"The Human Self",f:47},
+  {a:"أَبْصَارٌ",t:"abṣār",e:"sights (plural of baṣar)",c:"The Human Self",f:38},
+  {a:"أَفْوَاهٌ",t:"afwāh",e:"mouths (plural of fam)",c:"The Human Self",f:21},
+  {a:"لِسَانٌ",t:"lisān",e:"tongue, language",c:"The Human Self",f:25},
+  {a:"قَلْبٌ",t:"qalb",e:"heart",c:"The Human Self",f:132},
+  {a:"صَدْرٌ",t:"ṣadr",e:"chest, breast",c:"The Human Self",f:44},
+  {a:"يَدٌ",t:"yad",e:"hand",c:"The Human Self",f:118},
+  {a:"رِجْلٌ",t:"rijl",e:"foot, leg",c:"The Human Self",f:15},
+  {a:"نَفْسٌ",t:"nafs",e:"soul, self",c:"The Human Self",f:293},
+  {a:"رُوْحٌ",t:"rūḥ",e:"spirit, soul",c:"The Human Self",f:21},
+  {a:"قُوَّةٌ",t:"quwwah",e:"power, strength",c:"The Human Self",f:28},
+
+  // ── 14. WORLD & CREATION ─────────────────────────────────
+  {a:"بَيْتٌ",t:"bayt",e:"house",c:"World & Creation",f:64},
+  {a:"دَارٌ",t:"dār",e:"abode, home",c:"World & Creation",f:48},
+  {a:"دُنْيَا",t:"dunyā",e:"this world",c:"World & Creation",f:115},
+  {a:"سَبِيْلٌ",t:"sabīl",e:"way, path",c:"World & Creation",f:176},
+  {a:"صِرَاطٌ",t:"ṣirāṭ",e:"straight path",c:"World & Creation",f:46},
+  {a:"عَالَمٌ",t:"ʿālam",e:"world, universe",c:"World & Creation",f:73},
+  {a:"فِتْنَةٌ",t:"fitnah",e:"trial, persecution",c:"World & Creation",f:34},
+  {a:"قَرْيَةٌ",t:"qaryah",e:"town, village",c:"World & Creation",f:57},
+  {a:"مَالٌ",t:"māl",e:"wealth, property",c:"World & Creation",f:86},
+  {a:"مَتَاعٌ",t:"matāʿ",e:"provision, enjoyment",c:"World & Creation",f:34},
+  {a:"مَسْجِدٌ",t:"masjid",e:"mosque",c:"World & Creation",f:28},
+  {a:"مَكَانٌ",t:"makān",e:"place, abode",c:"World & Creation",f:32},
+  {a:"مَاءٌ",t:"māʾ",e:"water",c:"World & Creation",f:63},
+
+  // ── 15. DEEDS & ETHICS ───────────────────────────────────
+  {a:"أَعْمَالٌ",t:"aʿmāl",e:"actions, deeds",c:"Deeds & Ethics",f:41},
+  {a:"حَسَنَةٌ",t:"ḥasanah",e:"good deed",c:"Deeds & Ethics",f:31},
+  {a:"سَيِّئَةٌ",t:"sayyi'ah",e:"evil deed, sin",c:"Deeds & Ethics",f:68},
+  {a:"خَيْرٌ",t:"khayr",e:"good, goodness, better",c:"Deeds & Ethics",f:186},
+  {a:"شَرٌّ",t:"sharr",e:"evil, bad, worse",c:"Deeds & Ethics",f:29},
+  {a:"إِثْمٌ",t:"ithm",e:"sin",c:"Deeds & Ethics",f:35},
+  {a:"ذَنْبٌ",t:"dhanb",e:"sin, offence",c:"Deeds & Ethics",f:37},
+  {a:"جُنَاحٌ",t:"junāḥ",e:"sin, blame",c:"Deeds & Ethics",f:25},
+  {a:"حَرَامٌ",t:"ḥarām",e:"forbidden, unlawful",c:"Deeds & Ethics",f:26},
+  {a:"اِسْمٌ",t:"ism",e:"name",c:"Deeds & Ethics",f:27},
+  {a:"فَضْلٌ",t:"faḍl",e:"grace, bounty",c:"Deeds & Ethics",f:84},
+  {a:"آلَاءٌ",t:"ālāʾ",e:"favours, blessings",c:"Deeds & Ethics",f:34},
+  {a:"سُلْطَانٌ",t:"sulṭān",e:"authority, warrant",c:"Deeds & Ethics",f:37},
+  {a:"مُلْكٌ",t:"mulk",e:"dominion, reign",c:"Deeds & Ethics",f:48},
+  {a:"نِعْمَةٌ",t:"niʿmah",e:"favour, blessing",c:"Deeds & Ethics",f:37},
+  {a:"عَدْلٌ",t:"ʿadl",e:"justice, equity",c:"Deeds & Ethics",f:14},
+  {a:"فَسَادٌ",t:"fasād",e:"corruption, mischief",c:"Deeds & Ethics",f:50},
+  {a:"رَحْمَةٌ",t:"raḥmah",e:"mercy, compassion",c:"Deeds & Ethics",f:79},
+  {a:"إِذْنٌ",t:"idhn",e:"permission",c:"Deeds & Ethics",f:39},
+  {a:"بَأْسٌ",t:"baʾs",e:"power, adversity, punishment",c:"Deeds & Ethics",f:25},
+  {a:"طَيِّبٌ",t:"ṭayyib",e:"good, pure, wholesome",c:"Deeds & Ethics",f:30},
+  {a:"فَرِيْقٌ",t:"farīq",e:"party, group",c:"Deeds & Ethics",f:33},
+  {a:"حَدِيْثٌ",t:"ḥadīth",e:"speech, discourse",c:"Deeds & Ethics",f:23},
+
+  // ── 16. KEY VERBS ────────────────────────────────────────
+  {a:"قَالَ",t:"qāla",e:"he said",c:"Key Verbs",f:1719},
+  {a:"كَانَ",t:"kāna",e:"he was / to be",c:"Key Verbs",f:1361},
+  {a:"آمَنَ",t:"āmana",e:"he believed",c:"Key Verbs",f:782},
+  {a:"أَتٰى / جَاءَ",t:"atā / jāʾa",e:"he came",c:"Key Verbs",f:499},
+  {a:"شَاءَ",t:"shāʾa",e:"he willed",c:"Key Verbs",f:277},
+  {a:"رَأٰى",t:"raʾā",e:"he saw",c:"Key Verbs",f:269},
+  {a:"أَرَادَ",t:"arāda",e:"he intended, wished",c:"Key Verbs",f:139},
+  {a:"أَخَذَ",t:"akhadha",e:"he took, caught",c:"Key Verbs",f:142},
+  {a:"أَطَاعَ",t:"aṭāʿa",e:"he obeyed",c:"Key Verbs",f:74},
+  {a:"أَكَلَ",t:"akala",e:"he ate",c:"Key Verbs",f:101},
+  {a:"أَمَرَ",t:"amara",e:"he commanded",c:"Key Verbs",f:232},
+  {a:"أَنْزَلَ",t:"anzala",e:"he sent down, revealed",c:"Key Verbs",f:190},
+  {a:"اِتَّقٰى",t:"ittaqā",e:"he feared Allah, he was pious",c:"Key Verbs",f:215},
+  {a:"اِتَّبَعَ",t:"ittabaʿa",e:"he followed",c:"Key Verbs",f:140},
+  {a:"اِتَّخَذَ",t:"ittakhadha",e:"he took, adopted",c:"Key Verbs",f:128},
+  {a:"اِشْتَرٰى",t:"ishtarā",e:"he ascribed a partner",c:"Key Verbs",f:120},
+  {a:"اِسْتَغْفَرَ",t:"istaghfara",e:"he sought forgiveness",c:"Key Verbs",f:42},
+  {a:"اِسْتَطَاعَ",t:"istaṭāʿa",e:"he was able to",c:"Key Verbs",f:42},
+  {a:"اِسْتَقَامَ",t:"istaqāma",e:"he was straight, upright",c:"Key Verbs",f:47},
+  {a:"اِهْتَدٰى",t:"ihtadā",e:"he found the right path",c:"Key Verbs",f:61},
+  {a:"أَحَبَّ",t:"aḥabba",e:"he loved",c:"Key Verbs",f:64},
+  {a:"أَحْسَنَ",t:"aḥsana",e:"he did good, did excellently",c:"Key Verbs",f:72},
+  {a:"أَسْلَمَ",t:"aslama",e:"he submitted, surrendered",c:"Key Verbs",f:72},
+  {a:"أَقَامَ",t:"aqāma",e:"he established, set upright",c:"Key Verbs",f:67},
+  {a:"أَرْسَلَ",t:"arsala",e:"he sent",c:"Key Verbs",f:135},
+  {a:"أَنْبَتَ",t:"anbata",e:"he caused to grow",c:"Key Verbs",f:16},
+  {a:"أَنْذَرَ",t:"andhara",e:"he warned",c:"Key Verbs",f:70},
+  {a:"أَنْفَقَ",t:"anfaqa",e:"he spent (in the way of Allah)",c:"Key Verbs",f:69},
+  {a:"أَهْلَكَ",t:"ahlaka",e:"he destroyed",c:"Key Verbs",f:58},
+  {a:"أَفْلَحَ",t:"aflaḥa",e:"he succeeded",c:"Key Verbs",f:40},
+  {a:"بَعَثَ",t:"baʿatha",e:"he raised, resurrected",c:"Key Verbs",f:65},
+  {a:"جَعَلَ",t:"jaʿala",e:"he made, placed",c:"Key Verbs",f:346},
+  {a:"جَاهَدَ",t:"jāhada",e:"he strove, struggled",c:"Key Verbs",f:31},
+  {a:"حَكَمَ",t:"ḥakama",e:"he judged, ruled",c:"Key Verbs",f:80},
+  {a:"حَمِدَ",t:"ḥamida",e:"he praised",c:"Key Verbs",f:43},
+  {a:"خَلَقَ",t:"khalaqa",e:"he created",c:"Key Verbs",f:248},
+  {a:"خَرَجَ",t:"kharaja",e:"he came out",c:"Key Verbs",f:61},
+  {a:"خَلَدَ",t:"khalada",e:"he lived forever",c:"Key Verbs",f:83},
+  {a:"دَعَا",t:"daʿā",e:"he called, prayed",c:"Key Verbs",f:197},
+  {a:"ذَكَرَ",t:"dhakara",e:"he remembered",c:"Key Verbs",f:163},
+  {a:"رَحِمَ",t:"raḥima",e:"he had mercy on someone",c:"Key Verbs",f:148},
+  {a:"رَزَقَ",t:"razaqa",e:"he provided",c:"Key Verbs",f:122},
+  {a:"رَجَعَ",t:"rajaʿa",e:"he returned",c:"Key Verbs",f:64},
+  {a:"رَضِيَ",t:"raḍiya",e:"he was satisfied, content",c:"Key Verbs",f:57},
+  {a:"سَأَلَ",t:"saʾala",e:"he asked",c:"Key Verbs",f:119},
+  {a:"سَجَدَ",t:"sajada",e:"he prostrated",c:"Key Verbs",f:49},
+  {a:"سَمِعَ",t:"samiʿa",e:"he heard",c:"Key Verbs",f:100},
+  {a:"شَكَرَ",t:"shakara",e:"he was grateful",c:"Key Verbs",f:63},
+  {a:"شَهِدَ",t:"shahida",e:"he bore witness",c:"Key Verbs",f:66},
+  {a:"صَبَرَ",t:"ṣabara",e:"he was patient",c:"Key Verbs",f:94},
+  {a:"صَدَقَ",t:"ṣadaqa",e:"he was truthful",c:"Key Verbs",f:89},
+  {a:"عَبَدَ",t:"ʿabada",e:"he worshipped, served",c:"Key Verbs",f:143},
+  {a:"عَلِمَ",t:"ʿalima",e:"he knew",c:"Key Verbs",f:518},
+  {a:"عَمِلَ",t:"ʿamila",e:"he did, worked",c:"Key Verbs",f:318},
+  {a:"غَفَرَ",t:"ghafara",e:"he forgave",c:"Key Verbs",f:95},
+  {a:"فَعَلَ",t:"faʿala",e:"he did",c:"Key Verbs",f:105},
+  {a:"فَتَحَ",t:"fataḥa",e:"he opened, gave victory",c:"Key Verbs",f:29},
+  {a:"قَاتَلَ",t:"qātala",e:"he fought",c:"Key Verbs",f:54},
+  {a:"قَتَلَ",t:"qatala",e:"he killed, slew",c:"Key Verbs",f:93},
+  {a:"قَرَأَ",t:"qaraʾa",e:"he read, recited",c:"Key Verbs",f:17},
+  {a:"كَتَبَ",t:"kataba",e:"he wrote, prescribed",c:"Key Verbs",f:56},
+  {a:"كَفَرَ",t:"kafara",e:"he disbelieved, was ungrateful",c:"Key Verbs",f:461},
+  {a:"هَدٰى",t:"hadā",e:"he guided",c:"Key Verbs",f:163},
+  {a:"هَاجَرَ",t:"hājara",e:"he migrated",c:"Key Verbs",f:24},
+  {a:"وَجَدَ",t:"wajada",e:"he found",c:"Key Verbs",f:107},
+  {a:"وَعَدَ",t:"waʿada",e:"he promised",c:"Key Verbs",f:124},
+  {a:"تَابَ",t:"tāba",e:"he repented",c:"Key Verbs",f:72},
+  {a:"تَوَكَّلَ",t:"tawakkala",e:"he put his trust (in Allah)",c:"Key Verbs",f:44},
+  {a:"تَفَكَّرَ",t:"tafakkara",e:"he reflected, thought",c:"Key Verbs",f:17},
+  {a:"تَبَارَكَ",t:"tabāraka",e:"blessed, exalted is He",c:"Key Verbs",f:9},
+  {a:"سَبَّحَ",t:"sabbaḥa",e:"he glorified, praised",c:"Key Verbs",f:48},
+];
+
+// ============================================================
+// MUQATTAAT
+// ============================================================
+const muqattaat=[
+  {a:"الٓمٓ",n:"Alif Lam Mim",s:[{n:2,nm:"Al-Baqarah"},{n:3,nm:"Āl ʿImrān"},{n:29,nm:"Al-ʿAnkabūt"},{n:30,nm:"Ar-Rūm"},{n:31,nm:"Luqmān"},{n:32,nm:"As-Sajdah"}]},
+  {a:"الٓمٓصٓ",n:"Alif Lam Mim Sad",s:[{n:7,nm:"Al-Aʿrāf"}]},
+  {a:"الٓرٰ",n:"Alif Lam Ra",s:[{n:10,nm:"Yūnus"},{n:11,nm:"Hūd"},{n:12,nm:"Yūsuf"},{n:14,nm:"Ibrāhīm"},{n:15,nm:"Al-Ḥijr"}]},
+  {a:"الٓمٓرٰ",n:"Alif Lam Mim Ra",s:[{n:13,nm:"Ar-Raʿd"}]},
+  {a:"كٓهيعٓصٓ",n:"Kaf Ha Ya Ain Sad",s:[{n:19,nm:"Maryam"}]},
+  {a:"طٰهٰ",n:"Ta Ha",s:[{n:20,nm:"Ṭā Hā"}]},
+  {a:"طٰسٓمٓ",n:"Ta Sin Mim",s:[{n:26,nm:"Ash-Shuʿarāʾ"},{n:28,nm:"Al-Qaṣaṣ"}]},
+  {a:"طٰسٓ",n:"Ta Sin",s:[{n:27,nm:"An-Naml"}]},
+  {a:"يٰسٓ",n:"Ya Sin",s:[{n:36,nm:"Yā Sīn"}]},
+  {a:"صٓ",n:"Sad",s:[{n:38,nm:"Ṣād"}]},
+  {a:"حٰمٓ",n:"Ha Mim",s:[{n:40,nm:"Ghāfir"},{n:41,nm:"Fuṣṣilat"},{n:42,nm:"Ash-Shūrā"},{n:43,nm:"Az-Zukhruf"},{n:44,nm:"Ad-Dukhān"},{n:45,nm:"Al-Jāthiyah"},{n:46,nm:"Al-Aḥqāf"}]},
+  {a:"عٓسٓقٓ",n:"Ain Sin Qaf",s:[{n:42,nm:"Ash-Shūrā"}]},
+  {a:"قٓ",n:"Qaf",s:[{n:50,nm:"Qāf"}]},
+  {a:"نٓ",n:"Nun",s:[{n:68,nm:"Al-Qalam"}]},
+];
+
+// ============================================================
+// SLIDES
+// ============================================================
+const slides=[
+  {h:`
+    <p class="arabic" style="color:var(--gold);font-size:26px;margin-bottom:8px">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+    <h1 style="color:white;font-size:22px;font-weight:700;margin-bottom:8px">80% of Qur'anic Words</h1>
+    <p style="color:#88BBBB;font-size:14px;line-height:1.7">A beginner-friendly vocabulary session<br>to connect with the words of Allah ﷻ</p>
+    <p style="color:var(--gold);font-size:13px;margin-top:14px;font-style:italic">"The best among you are those who learn the Quran and teach it."<br><span style="color:#88BBBB;font-size:12px">— Prophet Muhammad ﷺ (Bukhāri)</span></p>
+  `},
+  {h:`
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:10px;letter-spacing:1px">THE QURAN — BY THE NUMBERS</p>
+    <div class="stat-grid-3" style="margin-bottom:10px">
+      <div class="sbox"><div class="n">114</div><div class="l">Surahs</div></div>
+      <div class="sbox"><div class="n">6,236</div><div class="l">Ayahs</div></div>
+      <div class="sbox"><div class="n">77,449</div><div class="l">Words</div></div>
+    </div>
+    <div class="stat-grid-3">
+      <div class="sbox"><div class="n">320,015</div><div class="l">Letters</div></div>
+      <div class="sbox"><div class="n">558</div><div class="l">Rukūʿs</div></div>
+      <div class="sbox"><div class="n">30</div><div class="l">Juz</div></div>
+    </div>
+    <p style="color:#88BBBB;font-size:12px;margin-top:10px">Revealed over ~23 years · 86 Makkan · 28 Madinan Surahs</p>
+  `},
+  {h:`
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:10px;letter-spacing:1px">STRUCTURE OF THE QUR'AN</p>
+    <div class="stat-grid" style="margin-bottom:8px">
+      <div class="sbox"><div class="n">558</div><div class="l">Rukūʿs<br>(paragraph units)</div></div>
+      <div class="sbox"><div class="n">14</div><div class="l">Sajdah Tilāwah<br>(prostration verses)</div></div>
+    </div>
+    <div class="stat-grid" style="margin-bottom:8px">
+      <div class="sbox"><div class="n">29</div><div class="l">Surahs open with<br>Muqaṭṭaʿāt letters</div></div>
+      <div class="sbox"><div class="n">86</div><div class="l">Makkan Surahs</div></div>
+    </div>
+    <div class="stat-grid">
+      <div class="sbox"><div class="n">28</div><div class="l">Madinan Surahs</div></div>
+      <div class="sbox"><div class="n">~23 yrs</div><div class="l">Period of Revelation</div></div>
+    </div>
+  `},
+  {h:`
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:8px;letter-spacing:1px">VOWEL MARKS — ḤARAKĀT</p>
+    <p style="color:white;font-size:13px;margin-bottom:12px">Every letter in the Quran is precisely voweled — preserving Allah's words perfectly since revelation.</p>
+    <div class="stat-grid" style="margin-bottom:8px">
+      <div class="sbox"><div class="n arabic" style="font-size:22px">◌َ</div><div class="n" style="font-size:17px">~53,000</div><div class="l">Zabar (Fatḥah)<br>short "a"</div></div>
+      <div class="sbox"><div class="n arabic" style="font-size:22px">◌ِ</div><div class="n" style="font-size:17px">~39,000</div><div class="l">Zer (Kasrah)<br>short "i"</div></div>
+    </div>
+    <div class="stat-grid">
+      <div class="sbox"><div class="n arabic" style="font-size:22px">◌ُ</div><div class="n" style="font-size:17px">~8,000</div><div class="l">Pesh (Ḍammah)<br>short "u"</div></div>
+      <div class="sbox"><div class="n arabic" style="font-size:22px">◌ّ</div><div class="n" style="font-size:17px">~19,000</div><div class="l">Shaddah<br>doubled letter</div></div>
+    </div>
+  `},
+  {h:`
+    <p style="color:var(--gold);font-size:48px;font-weight:700;line-height:1">82.6%</p>
+    <p style="color:white;font-size:15px;margin:8px 0 4px;font-weight:600">of the Quran understood</p>
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:12px">by learning the words in this booklet</p>
+    <div class="stat-grid">
+      <div class="sbox"><div class="n">41.5%</div><div class="l">First 6 pages alone<br>(grammar words)</div></div>
+      <div class="sbox"><div class="n">~300</div><div class="l">Core words cover<br>most of the Quran</div></div>
+    </div>
+    <p style="color:#88BBBB;font-size:12px;margin-top:10px">Source: Dr. Abdulazeez Abdulraheem — "80% of Qur'anic Words"</p>
+  `},
+  {h:`
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:8px;letter-spacing:1px">MOST FREQUENT WORDS</p>
+    <div style="width:100%;text-align:left">
+      ${[["قَالَ","qāla","he said",1719],["كَانَ","kāna","he was",1361],["رَبٌّ","rabb","Lord",970],["آمَنَ","āmana","believed",782],["آيَةٌ","āyah","sign/verse",382],["يَوْمٌ","yawm","day",393]].map(([ar,tr,en,n])=>`
+      <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+        <span style="font-family:'Amiri',serif;color:var(--gold);font-size:22px;direction:rtl;min-width:80px;text-align:right">${ar}</span>
+        <span style="color:#ccc;font-size:13px;flex:1">${en} <span style="color:#666">(${tr})</span></span>
+        <span style="background:rgba(196,154,43,0.18);color:var(--gold);font-size:12px;padding:2px 8px;border-radius:10px;font-weight:700">${n.toLocaleString()}×</span>
+      </div>`).join('')}
+    </div>
+  `},
+  {h:`
+    <div class="ayah-arabic arabic" style="font-size:20px;text-align:center;color:var(--gold);margin-bottom:12px">كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ</div>
+    <p style="color:#ccc;font-size:13px;line-height:1.7;font-style:italic">"A Book We have sent down to you, full of blessings, so that they may ponder over its signs..."</p>
+    <p style="color:var(--gold);font-size:12px;margin-top:8px;font-weight:600">— Surah Ṣād 38:29</p>
+    <p style="color:#88BBBB;font-size:12px;margin-top:10px">If we don't understand it, how can we ponder? That is why we are here today.</p>
+  `},
+  {h:`
+    <p style="color:var(--gold);font-size:15px;font-weight:700;margin-bottom:10px">Why Learn These Words?</p>
+    <div style="text-align:left;width:100%">
+      ${[["🤲","Deepen your Salah","Know what you're reciting in every prayer"],["💡","Understand Khutbahs","Follow Friday sermons without needing translation"],["📖","Read Quran directly","Build real independence from translations"],["❤️","Feel the meaning","Be moved when these words are recited"],["🎯","Just 5 words a day","Complete the core vocabulary in weeks"]].map(([ic,b,s])=>`
+      <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+        <span style="font-size:18px;min-width:24px">${ic}</span>
+        <div><p style="color:white;font-size:13px;font-weight:600">${b}</p><p style="color:#88BBBB;font-size:12px">${s}</p></div>
+      </div>`).join('')}
+    </div>
+  `},
+  {h:`
+    <p style="color:var(--gold);font-size:15px;font-weight:700;margin-bottom:10px">Today's 16 Categories</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;text-align:left">
+      ${["Demonstratives","Negation","Pronouns","Questions","Prepositions","Time & Place","Particles","Allah's Attributes","Faith & Dīn","The Last Day","Prophets & Signs","People & Family","The Human Self","World & Creation","Deeds & Ethics","Key Verbs"].map((c,i)=>`
+      <div style="background:rgba(255,255,255,0.07);border-radius:8px;padding:7px 9px;color:#ccc;font-size:11px">${i+1}. ${c}</div>`).join('')}
+    </div>
+  `},
+  {h:`
+    <p style="color:var(--gold);font-size:15px;font-weight:700;margin-bottom:10px">How to Use This App</p>
+    <div style="text-align:left;width:100%">
+      ${[["🎤","Present","These slides — use for your session"],["📅","Daily Plan","5 words/day · pick any day"],["📖","Learn","Browse all words by category"],["🔡","Muqaṭṭaʿāt","Mysterious letters — reference tab"],["📝","Quiz","Arabic ↔ English multiple choice"],["🔄","Flashcards","Tap to flip · mark known or learning"]].map(([ic,tab,desc])=>`
+      <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);align-items:center">
+        <span style="font-size:16px;min-width:22px">${ic}</span>
+        <span style="color:var(--gold);font-size:13px;font-weight:700;min-width:90px">${tab}</span>
+        <span style="color:#88BBBB;font-size:12px;flex:1">${desc}</span>
+      </div>`).join('')}
+    </div>
+    <p style="color:var(--gold);font-size:12px;margin-top:10px">Share the HTML file — works fully offline on any phone.</p>
+  `},
+  {h:`
+    <p class="arabic" style="color:var(--gold);font-size:20px;margin-bottom:6px">اَللّٰهُمَّ عَلِّمْنَا مَا يَنْفَعُنَا وَانْفَعْنَا بِمَا عَلَّمْتَنَا</p>
+    <p style="color:#88BBBB;font-size:12px;font-style:italic;margin-bottom:14px">"O Allah, teach us what benefits us and benefit us with what You have taught us."</p>
+    <h1 style="color:white;font-size:20px;margin-bottom:8px">Let's Begin! بِسْمِ اللّٰهِ</h1>
+    <div class="stat-grid-3" style="margin-top:10px">
+      <div class="sbox"><div class="n">${allWords.length}</div><div class="l">Words in app</div></div>
+      <div class="sbox"><div class="n">30</div><div class="l">Day plan</div></div>
+      <div class="sbox"><div class="n">∞</div><div class="l">Barakah</div></div>
+    </div>
+  `},
+];
+
+// ============================================================
+// APP STATE
+// ============================================================
+const cats=[...new Set(allWords.map(w=>w.c))];
+const NUM_DAYS=40;
+function getDay(d){const s=((d-1)*5)%allWords.length;return Array.from({length:5},(_,i)=>allWords[(s+i)%allWords.length]);}
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+let tab="present",si=0,bcat=cats[0],sday=1;
+let qst={},fst={},qmode="mixed";
+
+function render(){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
+  const app=document.getElementById('app');
+  if(tab==="present"){app.innerHTML=renderPresent();}
+  else if(tab==="days"){app.innerHTML=renderDays();}
+  else if(tab==="learn"){app.innerHTML=renderLearn();}
+  else if(tab==="muqattaat"){app.innerHTML=renderMuq();}
+  else if(tab==="quiz"){renderQ(app);}
+  else if(tab==="flash"){renderF(app);}
+  bind();
+}
+
+// PRESENT
+function renderPresent(){
+  const s=slides[si];
+  return `
+    <div class="slide">${s.h}</div>
+    <div class="slide-nav">
+      <button class="prev" data-a="sp" ${si===0?'disabled':''}>◀ Prev</button>
+      <span style="color:#888;font-size:14px;align-self:center">${si+1} / ${slides.length}</span>
+      <button class="next" data-a="sn" ${si===slides.length-1?'disabled':''}>Next ▶</button>
+    </div>
+    <div class="slide-dots">${slides.map((_,i)=>`<div class="dot ${i===si?'active':''}"></div>`).join('')}</div>
+    <div style="margin-top:14px">
+      <div class="card teal">
+        <h3>📊 At a Glance</h3>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;text-align:center">
+          <div><div style="color:var(--teal);font-size:20px;font-weight:700">${allWords.length}</div><div style="color:#888;font-size:11px">Words</div></div>
+          <div><div style="color:var(--teal);font-size:20px;font-weight:700">${cats.length}</div><div style="color:#888;font-size:11px">Categories</div></div>
+          <div><div style="color:var(--teal);font-size:20px;font-weight:700">${NUM_DAYS}</div><div style="color:#888;font-size:11px">Day Plan</div></div>
+          <div><div style="color:var(--teal);font-size:20px;font-weight:700">14</div><div style="color:#888;font-size:11px">Muqaṭṭaʿāt</div></div>
+        </div>
+      </div>
+      <div class="ayah-card">
+        <div class="ayah-arabic arabic">خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ</div>
+        <p class="ayah-translation">"The best of you are those who learn the Quran and teach it."</p>
+        <p class="ayah-ref">— Prophet Muhammad ﷺ · Ṣaḥīḥ al-Bukhārī</p>
+      </div>
+    </div>`;
+}
+
+// DAYS
+function renderDays(){
+  const words=getDay(sday);
+  const rows=words.map(w=>`
+    <div class="word-row">
+      <div><span class="eng">${w.e}</span><span class="translit">(${w.t})</span></div>
+      <span class="arb arabic">${w.a}</span>
+    </div>`).join('');
+  const btns=Array.from({length:NUM_DAYS},(_,i)=>i+1).map(d=>
+    `<button class="day-btn ${d===sday?'active':''}" data-day="${d}">Day ${d}</button>`).join('');
+  return `
+    <div class="hero"><div class="hero-bg">
+      <p class="hero-bismillah arabic">بِسْمِ اللّٰهِ</p>
+      <h1 class="hero" style="color:white;font-size:18px;margin:4px 0">30-Day Vocabulary Plan</h1>
+      <p class="sub">5 words · every day · click any day to start</p>
+    </div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3 style="color:var(--dark-teal);font-size:15px;font-weight:700">Choose a Day</h3>
+      <span style="font-size:13px;color:#aaa">Day ${sday} selected</span>
+    </div>
+    <div class="day-grid">${btns}</div>
+    <div class="day-words-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span style="color:var(--dark-teal);font-size:15px;font-weight:700">Day ${sday} — 5 Words</span>
+        <span style="background:var(--gold);color:white;font-size:12px;padding:3px 12px;border-radius:12px">Day ${sday}</span>
+      </div>
+      ${rows}
+    </div>
+    <div class="day-actions">
+      <button class="quiz-day" data-a="qday">📝 Quiz These</button>
+      <button class="flash-day" data-a="fday">🔄 Flashcards</button>
+    </div>`;
+}
+
+// LEARN
+function renderLearn(){
+  const pills=cats.map(c=>`<button class="cat-pill ${c===bcat?'active':''}" data-bc="${c}">${c}</button>`).join('');
+  const items=allWords.filter(w=>w.c===bcat).map(w=>`
+    <div class="browse-item">
+      <div>
+        <div class="eng-col">${w.e}</div>
+        <div style="font-size:12px;color:#aaa;font-style:italic">${w.t}${w.f?` · ${w.f}× in Quran`:''}</div>
+      </div>
+      <span class="arb-col arabic">${w.a}</span>
+    </div>`).join('');
+  const cnt=allWords.filter(w=>w.c===bcat).length;
+  return `
+    <div style="background:white;border-radius:12px;padding:13px;margin-bottom:12px;border:1px solid #e0e0e0">
+      <p style="font-size:12px;color:#888;margin-bottom:8px;font-weight:700">BROWSE BY CATEGORY — ${cnt} words</p>
+      <div class="cat-pills">${pills}</div>
+    </div>
+    <div class="browse-list">${items}</div>`;
+}
+
+// MUQATTAAT
+function renderMuq(){
+  const cards=muqattaat.map(m=>`
+    <div class="mq-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <p style="font-size:14px;font-weight:700;color:var(--dark-teal)">${m.n}</p>
+          <p style="font-size:12px;color:#aaa;margin-top:2px">Appears in ${m.s.length} Surah${m.s.length>1?'s':''}</p>
+        </div>
+        <span class="arabic" style="font-size:34px;color:var(--gold);line-height:1.4">${m.a}</span>
+      </div>
+      <div>${m.s.map(s=>`<span class="surah-pill">${s.n}. ${s.nm}</span>`).join('')}</div>
+    </div>`).join('');
+  return `
+    <div class="hero"><div class="hero-bg">
+      <p class="arabic" style="color:var(--gold);font-size:26px;margin-bottom:6px">الحروف المقطعة</p>
+      <p style="color:white;font-size:15px;font-weight:600;margin-bottom:4px">Ḥurūf Muqaṭṭaʿāt</p>
+      <p style="color:#88BBBB;font-size:13px;line-height:1.7">The 14 "mysterious letters" opening 29 Surahs.<br>Allah alone knows their full meaning.</p>
+    </div></div>
+    <div class="card teal" style="margin-bottom:14px">
+      <h3>📌 Key Facts</h3>
+      <p>• Each letter earns <strong>10 rewards</strong> when recited (Tirmidhi)<br>
+      • They open <strong>29 of 114</strong> Surahs<br>
+      • Recited by letter name: Alif · Lam · Mim = 3 letters, 30 rewards<br>
+      • They prove the miraculous nature of the Quran — Arabs knew these letters yet couldn't produce anything like it<br>
+      • Scholars have 40+ opinions on their meaning; we believe in them and recite with full tawakkul</p>
+    </div>
+    ${cards}`;
+}
+
+// QUIZ
+function startQ(words){
+  const pool=shuffle(words).slice(0,Math.min(10,words.length));
+  qst={questions:pool.map(w=>{
+    const dir=qmode==="mixed"?(Math.random()>0.5?"ar2en":"en2ar"):qmode;
+    return{word:w,options:shuffle([w,...shuffle(allWords.filter(x=>x.e!==w.e)).slice(0,3)]),dir};
+  }),index:0,score:0,selected:null,finished:false};
+  tab="quiz";render();
+}
+function renderQ(app){
+  if(!qst.questions||!qst.questions.length){app.innerHTML=renderQHome();bind();return;}
+  if(qst.finished){
+    const pct=qst.score/qst.questions.length;
+    app.innerHTML=`<div class="results">
+      <div class="emoji">${pct>=0.8?"🌟":pct>=0.5?"👍":"📖"}</div>
+      <div class="sc">${qst.score} / ${qst.questions.length}</div>
+      <p class="msg">${pct>=0.8?"MashaAllah! Excellent work!":pct>=0.5?"Good effort — keep reviewing!":"Keep going, inshaAllah you'll get there!"}</p>
+      <div class="btn-row">
+        <button class="btn-primary" data-a="rq">Retry</button>
+        <button class="btn-secondary" data-a="qh">New Quiz</button>
+      </div></div>`;bind();return;
+  }
+  const q=qst.questions[qst.index],prog=(qst.index/qst.questions.length)*100;
+  const opts=q.options.map((opt,i)=>{
+    const correct=opt.e===q.word.e;
+    let cls="option-btn"+(q.dir==="en2ar"?" arabic-opt":"");
+    if(qst.selected!==null){if(correct)cls+=" correct";else if(qst.selected===i)cls+=" wrong";}
+    return`<button class="${cls}" data-opt="${i}" ${qst.selected!==null?"disabled":""}>${q.dir==="ar2en"?opt.e:opt.a}</button>`;
+  }).join('');
+  app.innerHTML=`
+    <div class="progress-bar"><div class="fill" style="width:${prog}%"></div></div>
+    <div class="quiz-header"><span style="font-size:14px;color:#888">Q${qst.index+1} / ${qst.questions.length}</span><span style="font-size:14px;color:var(--teal);font-weight:700">✅ ${qst.score}</span></div>
+    <div class="quiz-prompt">
+      <p class="qlabel">${q.dir==="ar2en"?"What does this word mean?":"Which Arabic word is this?"}</p>
+      <p class="qword ${q.dir==="ar2en"?"arabic":""}">${q.dir==="ar2en"?q.word.a:q.word.e}</p>
+      ${q.dir==="ar2en"?`<p class="qtranslit">${q.word.t}</p>`:''}
+    </div>
+    <div class="options-grid">${opts}</div>
+    <button class="btn-back" data-a="qh" style="margin-top:14px">← Back to Quiz Menu</button>`;
+  bind();
+}
+function renderQHome(){
+  const db=Array.from({length:NUM_DAYS},(_,i)=>i+1).map(d=>`<button class="day-btn" data-qd="${d}" style="font-size:12px">D${d}</button>`).join('');
+  return`
+    <div class="hero"><div class="hero-bg">
+      <p style="color:var(--gold);font-size:18px;font-weight:700;margin-bottom:4px">📝 Quiz Yourself</p>
+      <p style="color:#88BBBB;font-size:13px">Pick a category or day, then choose your style</p>
+    </div></div>
+    <p class="section-title">Question Style</p>
+    <div class="mode-toggle">
+      <button class="mode-btn ${qmode==="ar2en"?"active":""}" data-qm="ar2en">Arabic → English</button>
+      <button class="mode-btn ${qmode==="en2ar"?"active":""}" data-qm="en2ar">English → Arabic</button>
+      <button class="mode-btn ${qmode==="mixed"?"active":""}" data-qm="mixed">Mixed</button>
+    </div>
+    <p class="section-title">By Day</p>
+    <div class="day-grid" style="grid-template-columns:repeat(6,1fr)">${db}</div>
+    <p class="section-title">By Category</p>
+    <div class="cat-pick-grid">
+      <button class="cat-pick-btn gd" data-qc="all">⭐ All ${allWords.length} Words <span class="cnt">${allWords.length}</span></button>
+      ${cats.map(c=>{const cnt=allWords.filter(w=>w.c===c).length;return`<button class="cat-pick-btn" data-qc="${c}">${c}<span class="cnt">${cnt}</span></button>`;}).join('')}
+    </div>`;
+}
+
+// FLASHCARDS
+function startF(words){
+  fst={deck:shuffle(words),index:0,flipped:false,known:0};
+  tab="flash";render();
+}
+function renderF(app){
+  if(!fst.deck||!fst.deck.length){app.innerHTML=renderFHome();bind();return;}
+  if(fst.index>=fst.deck.length){
+    app.innerHTML=`<div class="results">
+      <div class="emoji">✅</div><div class="sc">Session Done!</div>
+      <p class="msg">You marked <strong>${fst.known}</strong> of <strong>${fst.deck.length}</strong> as known. MashaAllah!</p>
+      <div class="btn-row">
+        <button class="btn-primary" data-a="rf">Again</button>
+        <button class="btn-secondary" data-a="fh">New Deck</button>
+      </div></div>`;bind();return;
+  }
+  const w=fst.deck[fst.index],prog=(fst.index/fst.deck.length)*100;
+  app.innerHTML=`
+    <div class="progress-bar"><div class="fill" style="width:${prog}%"></div></div>
+    <div class="quiz-header"><span style="font-size:14px;color:#888">${fst.index+1} / ${fst.deck.length}</span><span style="font-size:13px;color:var(--gold)">${w.c}</span></div>
+    <div class="flashcard ${fst.flipped?"back":"front"}" data-a="flip">
+      ${!fst.flipped
+        ?`<p class="f-arabic arabic">${w.a}</p><p class="f-hint">Tap to reveal meaning</p>`
+        :`<p class="f-english">${w.e}</p><p class="f-arabic arabic" style="font-size:36px;color:var(--teal)">${w.a}</p><p class="f-translit">${w.t}</p>${w.f?`<p class="f-freq">Appears ${w.f}× in Quran</p>`:''}`}
+    </div>
+    <div class="flash-actions" ${!fst.flipped?'style="opacity:0.35;pointer-events:none"':''}>
+      <button class="still" data-a="fno">Still Learning</button>
+      <button class="got" data-a="fyes">Got It ✓</button>
+    </div>
+    <button class="btn-back" data-a="fh" style="margin-top:12px">← Back to Flashcard Menu</button>`;
+  bind();
+}
+function renderFHome(){
+  const db=Array.from({length:NUM_DAYS},(_,i)=>i+1).map(d=>`<button class="day-btn" data-fd="${d}" style="font-size:12px">D${d}</button>`).join('');
+  return`
+    <div class="hero"><div class="hero-bg">
+      <p style="color:var(--gold);font-size:18px;font-weight:700;margin-bottom:4px">🔄 Flashcards</p>
+      <p style="color:#88BBBB;font-size:13px">See Arabic → think → tap to reveal</p>
+    </div></div>
+    <p class="section-title">By Day</p>
+    <div class="day-grid" style="grid-template-columns:repeat(6,1fr)">${db}</div>
+    <p class="section-title">By Category</p>
+    <div class="cat-pick-grid">
+      <button class="cat-pick-btn gd" data-fc="all">⭐ All ${allWords.length} Words <span class="cnt">${allWords.length}</span></button>
+      ${cats.map(c=>{const cnt=allWords.filter(w=>w.c===c).length;return`<button class="cat-pick-btn" data-fc="${c}">${c}<span class="cnt">${cnt}</span></button>`;}).join('')}
+    </div>`;
+}
+
+// BIND
+function bind(){
+  document.querySelectorAll('.nav-tab').forEach(el=>el.onclick=()=>{
+    tab=el.dataset.tab;
+    if(tab==="quiz"&&!qst.questions)qst={};
+    if(tab==="flash"&&!fst.deck)fst={};
+    render();
+  });
+  qs2('[data-a="sn"]',el=>el.onclick=()=>{if(si<slides.length-1){si++;render();}});
+  qs2('[data-a="sp"]',el=>el.onclick=()=>{if(si>0){si--;render();}});
+  document.querySelectorAll('[data-day]').forEach(el=>el.onclick=()=>{sday=parseInt(el.dataset.day);render();});
+  qs2('[data-a="qday"]',el=>el.onclick=()=>startQ(getDay(sday)));
+  qs2('[data-a="fday"]',el=>el.onclick=()=>startF(getDay(sday)));
+  document.querySelectorAll('[data-bc]').forEach(el=>el.onclick=()=>{bcat=el.dataset.bc;render();});
+  document.querySelectorAll('[data-qm]').forEach(el=>el.onclick=()=>{qmode=el.dataset.qm;document.querySelectorAll('[data-qm]').forEach(b=>b.classList.toggle('active',b.dataset.qm===qmode));});
+  document.querySelectorAll('[data-qc]').forEach(el=>el.onclick=()=>startQ(el.dataset.qc==="all"?allWords:allWords.filter(w=>w.c===el.dataset.qc)));
+  document.querySelectorAll('[data-qd]').forEach(el=>el.onclick=()=>startQ(getDay(parseInt(el.dataset.qd))));
+  document.querySelectorAll('[data-fc]').forEach(el=>el.onclick=()=>startF(el.dataset.fc==="all"?allWords:allWords.filter(w=>w.c===el.dataset.fc)));
+  document.querySelectorAll('[data-fd]').forEach(el=>el.onclick=()=>startF(getDay(parseInt(el.dataset.fd))));
+  document.querySelectorAll('[data-opt]').forEach(el=>el.onclick=()=>{
+    if(qst.selected!==null)return;
+    const i=parseInt(el.dataset.opt),q=qst.questions[qst.index];
+    qst.selected=i;if(q.options[i].e===q.word.e)qst.score++;
+    renderQ(document.getElementById('app'));
+    setTimeout(()=>{qst.index<qst.questions.length-1?(qst.index++,qst.selected=null):qst.finished=true;renderQ(document.getElementById('app'));},1300);
+  });
+  qs2('[data-a="flip"]',el=>el.onclick=()=>{fst.flipped=!fst.flipped;renderF(document.getElementById('app'));});
+  qs2('[data-a="fno"]',el=>el.onclick=()=>{fst.index++;fst.flipped=false;renderF(document.getElementById('app'));});
+  qs2('[data-a="fyes"]',el=>el.onclick=()=>{fst.known++;fst.index++;fst.flipped=false;renderF(document.getElementById('app'));});
+  qs2('[data-a="rq"]',el=>el.onclick=()=>{qst={...qst,index:0,score:0,selected:null,finished:false,questions:shuffle(qst.questions).map(q=>({...q,options:shuffle(q.options)}))};renderQ(document.getElementById('app'));});
+  qs2('[data-a="qh"]',el=>el.onclick=()=>{qst={};render();});
+  qs2('[data-a="rf"]',el=>el.onclick=()=>{fst={...fst,deck:shuffle(fst.deck),index:0,flipped:false,known:0};renderF(document.getElementById('app'));});
+  qs2('[data-a="fh"]',el=>el.onclick=()=>{fst={};render();});
+}
+function qs2(sel,fn){const el=document.querySelector(sel);if(el)fn(el);}
+render();
+</script>
+</body>
+</html>
