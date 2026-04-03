@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Understand the Quran — Vocabulary Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal:#0D7377; --dark-teal:#0A5C5E; --gold:#C49A2B; --deep-gold:#A8841F;
+  --cream:#FFF8E7; --dark-bg:#1A3636; --light-teal:#E0F2F1;
+  --green:#2E7D32; --red:#C62828;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'IBM Plex Sans',sans-serif;background:#f0f4f4;color:#333;min-height:100vh;}
+.arabic{font-family:'Amiri','Traditional Arabic',serif;direction:rtl;line-height:1.6;}
+
+.nav-bar{position:sticky;top:0;z-index:100;background:var(--dark-bg);display:flex;overflow-x:auto;gap:2px;padding:8px 8px 0;scrollbar-width:none;}
+.nav-bar::-webkit-scrollbar{display:none;}
+.nav-tab{flex-shrink:0;padding:10px 14px;background:rgba(255,255,255,0.08);color:#88BBBB;border:none;cursor:pointer;border-radius:10px 10px 0 0;font-size:12px;font-weight:500;transition:all 0.2s;white-space:nowrap;}
+.nav-tab.active{background:var(--gold);color:white;font-weight:700;}
+
+.app{max-width:540px;margin:0 auto;padding:16px 14px 80px;}
+
+/* SLIDES */
+.slide{background:var(--dark-bg);border-radius:18px;padding:30px 22px;text-align:center;margin-bottom:12px;position:relative;overflow:hidden;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.slide::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(196,154,43,0.07);}
+.slide .bismillah{font-family:'Amiri',serif;color:var(--gold);font-size:26px;direction:rtl;margin-bottom:10px;}
+.slide-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;}
+.slide-nav button{padding:10px 22px;border:none;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;}
+.slide-nav .prev{background:#eee;color:#555;}
+.slide-nav .next{background:var(--gold);color:white;}
+.slide-nav button:disabled{opacity:0.35;cursor:default;}
+.slide-dots{display:flex;gap:5px;justify-content:center;margin-top:8px;}
+.dot{width:7px;height:7px;border-radius:50%;background:#ccc;transition:all 0.2s;}
+.dot.active{background:var(--teal);width:20px;border-radius:4px;}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;}
+.stat-box{background:rgba(255,255,255,0.07);border-radius:10px;padding:12px 8px;text-align:center;}
+.stat-box .num{color:var(--gold);font-size:20px;font-weight:700;line-height:1.2;}
+.stat-box .lbl{color:#88BBBB;font-size:11px;margin-top:3px;line-height:1.4;}
+.stat-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;width:100%;}
+
+/* INFO CARDS */
+.info-card{background:white;border-radius:14px;padding:16px;margin-bottom:10px;border-left:4px solid var(--gold);}
+.info-card h3{color:var(--dark-teal);font-size:14px;margin-bottom:8px;font-weight:700;}
+.info-card p{color:#555;font-size:13px;line-height:1.7;}
+.info-card.teal{border-left-color:var(--teal);}
+
+/* DAY TAB */
+.day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px;}
+.day-btn{padding:9px 4px;border:2px solid #ddd;border-radius:10px;background:white;cursor:pointer;text-align:center;font-size:12px;color:#666;font-weight:500;transition:all 0.2s;}
+.day-btn.active{border-color:var(--teal);background:var(--teal);color:white;font-weight:700;}
+.day-words-card{background:var(--cream);border:2px solid var(--gold);border-radius:14px;padding:16px;margin-bottom:12px;}
+.word-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(196,154,43,0.2);}
+.word-row:last-child{border-bottom:none;}
+.word-row .eng{font-size:13px;color:#333;}
+.word-row .translit{font-size:11px;color:#aaa;margin-left:4px;font-style:italic;}
+.word-row .arb{font-family:'Amiri',serif;font-size:24px;color:var(--teal);direction:rtl;}
+.day-actions{display:flex;gap:10px;}
+.day-actions button{flex:1;padding:12px;border:none;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;}
+.day-actions .quiz-day{background:var(--teal);color:white;}
+.day-actions .flash-day{background:var(--gold);color:white;}
+
+/* LEARN */
+.cat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.cat-pill{padding:6px 13px;border-radius:20px;font-size:12px;cursor:pointer;border:none;font-weight:500;background:#e8f0f0;color:var(--teal);transition:all 0.15s;}
+.cat-pill.active{background:var(--teal);color:white;font-weight:700;}
+.browse-list{border-radius:10px;border:1px solid #e0e0e0;overflow:hidden;}
+.browse-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #f0f0f0;background:white;}
+.browse-item:nth-child(even){background:#fafafa;}
+.browse-item:last-child{border-bottom:none;}
+.browse-item .eng-col{font-size:13px;color:#333;}
+.browse-item .arb-col{font-family:'Amiri',serif;font-size:26px;color:var(--teal);direction:rtl;}
+
+/* QUIZ */
+.progress-bar{width:100%;height:5px;background:#e0e0e0;border-radius:3px;margin-bottom:12px;overflow:hidden;}
+.progress-bar .fill{height:100%;background:var(--teal);border-radius:3px;transition:width 0.35s;}
+.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 2px;}
+.quiz-header .info{font-size:13px;color:#888;}
+.quiz-header .score{font-size:13px;color:var(--teal);font-weight:700;}
+.quiz-prompt{background:var(--dark-bg);border-radius:14px;padding:34px 20px;text-align:center;margin-bottom:14px;}
+.quiz-prompt .qlabel{color:#88BBBB;font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.quiz-prompt .qword{color:var(--gold);font-size:40px;font-weight:700;line-height:1.4;}
+.quiz-prompt .qword.eng{font-size:20px;direction:ltr;}
+.quiz-prompt .qtranslit{color:#88BBBB;font-size:13px;font-style:italic;margin-top:6px;}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.option-btn{padding:15px 10px;border:2px solid #ddd;border-radius:12px;background:white;cursor:pointer;font-size:14px;color:#333;transition:all 0.2s;min-height:56px;display:flex;align-items:center;justify-content:center;text-align:center;}
+.option-btn.arabic-opt{font-family:'Amiri',serif;font-size:26px;direction:rtl;color:var(--teal);}
+.option-btn.correct{background:#E8F5E9;border-color:#4CAF50;color:var(--green);font-weight:700;}
+.option-btn.wrong{background:#FFEBEE;border-color:#E53935;color:var(--red);}
+.option-btn:disabled{cursor:default;}
+
+/* FLASHCARD */
+.flashcard{border-radius:18px;padding:48px 24px;text-align:center;cursor:pointer;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.3s;user-select:none;}
+.flashcard.front{background:var(--dark-bg);}
+.flashcard.back{background:var(--cream);border:2px solid var(--gold);}
+.flashcard .f-arabic{font-family:'Amiri',serif;color:var(--gold);font-size:48px;direction:rtl;margin-bottom:10px;line-height:1.4;}
+.flashcard .f-hint{color:#88BBBB;font-size:12px;}
+.flashcard .f-english{color:var(--dark-teal);font-size:24px;font-weight:700;margin-bottom:8px;}
+.flashcard .f-translit{color:#888;font-size:13px;font-style:italic;}
+.flashcard .f-freq{color:#aaa;font-size:12px;margin-top:6px;}
+.flash-actions{display:flex;gap:10px;margin-top:12px;}
+.flash-actions button{flex:1;padding:13px;border:none;border-radius:12px;cursor:pointer;font-size:14px;font-weight:700;}
+.flash-actions .still{background:#FFEBEE;color:var(--red);}
+.flash-actions .got{background:#E8F5E9;color:var(--green);}
+
+/* RESULTS */
+.results{text-align:center;padding:34px 16px;}
+.results .emoji{font-size:54px;margin-bottom:10px;}
+.results .sc{color:var(--teal);font-size:32px;font-weight:700;}
+.results .msg{color:#666;font-size:14px;margin:6px 0 22px;line-height:1.6;}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{padding:12px 26px;background:var(--teal);color:white;border:none;border-radius:10px;cursor:pointer;font-size:14px;font-weight:700;}
+.btn-secondary{padding:12px 26px;background:white;color:var(--teal);border:2px solid var(--teal);border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;}
+.btn-back{width:100%;padding:12px;background:#eee;color:#666;border:none;border-radius:10px;cursor:pointer;font-size:14px;margin-top:12px;}
+
+/* PICKER */
+.cat-pick-grid{display:grid;gap:8px;}
+.cat-pick-btn{padding:13px 16px;border-radius:12px;cursor:pointer;font-size:13px;font-weight:500;border:2px solid var(--teal);background:white;color:var(--dark-teal);text-align:left;transition:all 0.15s;}
+.cat-pick-btn.gd{background:var(--gold);color:white;border-color:var(--gold);}
+.mode-toggle{display:flex;gap:8px;margin-bottom:12px;}
+.mode-btn{flex:1;padding:10px;border:2px solid #ddd;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;background:white;color:#555;}
+.mode-btn.active{border-color:var(--teal);background:var(--teal);color:white;font-weight:700;}
+.section-title{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px;}
+
+/* MUQATTAAT */
+.mq-card{background:white;border-radius:14px;padding:16px;margin-bottom:10px;border-left:4px solid var(--gold);box-shadow:0 1px 4px rgba(0,0,0,0.05);}
+.surah-pill{display:inline-block;background:#e8f0f0;color:var(--teal);border-radius:20px;padding:3px 10px;font-size:12px;margin:3px 3px 0 0;font-weight:500;}
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <button class="nav-tab active" data-tab="present">🎤 Present</button>
+  <button class="nav-tab" data-tab="days">📅 Daily Plan</button>
+  <button class="nav-tab" data-tab="learn">📖 Learn</button>
+  <button class="nav-tab" data-tab="muqattaat">🔡 Muqaṭṭaʿāt</button>
+  <button class="nav-tab" data-tab="quiz">📝 Quiz</button>
+  <button class="nav-tab" data-tab="flash">🔄 Flashcards</button>
+</div>
+
+<div class="app" id="app"></div>
+
+<script>
+// ============================================================
+//  WORD DATABASE
+// ============================================================
+const allWords = [
+  // Particles & Connectors
+  {arabic:"هٰذَا",t:"hādhā",english:"this (m.)",cat:"Particles & Connectors"},
+  {arabic:"ذٰلِكَ",t:"dhālika",english:"that (m.)",cat:"Particles & Connectors"},
+  {arabic:"هٰذِهِ",t:"hādhihi",english:"this (f.)",cat:"Particles & Connectors"},
+  {arabic:"تِلْكَ",t:"tilka",english:"that (f.)",cat:"Particles & Connectors"},
+  {arabic:"الَّذِيْنَ",t:"alladhīna",english:"those who",cat:"Particles & Connectors"},
+  {arabic:"الَّذِيْ",t:"alladhī",english:"the one who (m.)",cat:"Particles & Connectors"},
+  {arabic:"لَا",t:"lā",english:"no / not",cat:"Particles & Connectors"},
+  {arabic:"مَا",t:"mā",english:"not / what",cat:"Particles & Connectors"},
+  {arabic:"إِنَّ",t:"inna",english:"verily / truly",cat:"Particles & Connectors"},
+  {arabic:"إِذَا",t:"idhā",english:"when (future)",cat:"Particles & Connectors"},
+  {arabic:"لَنْ",t:"lan",english:"will not",cat:"Particles & Connectors"},
+  {arabic:"لَمْ",t:"lam",english:"did not",cat:"Particles & Connectors"},
+  {arabic:"قَدْ",t:"qad",english:"indeed / has",cat:"Particles & Connectors"},
+  {arabic:"إِنْ",t:"in",english:"if (conditional)",cat:"Particles & Connectors"},
+  {arabic:"لَوْ",t:"law",english:"if (hypothetical)",cat:"Particles & Connectors"},
+  {arabic:"أَوْ",t:"aw",english:"or",cat:"Particles & Connectors"},
+  {arabic:"ثُمَّ",t:"thumma",english:"then / thereafter",cat:"Particles & Connectors"},
+  {arabic:"وَ",t:"wa",english:"and",cat:"Particles & Connectors"},
+  {arabic:"فَ",t:"fa",english:"so / then",cat:"Particles & Connectors"},
+  {arabic:"بَلْ",t:"bal",english:"rather / but",cat:"Particles & Connectors"},
+  // Prepositions
+  {arabic:"فِيْ",t:"fī",english:"in",cat:"Prepositions"},
+  {arabic:"مِنْ",t:"min",english:"from",cat:"Prepositions"},
+  {arabic:"إِلٰى",t:"ilā",english:"to / towards",cat:"Prepositions"},
+  {arabic:"عَلٰى",t:"ʿalā",english:"on / upon",cat:"Prepositions"},
+  {arabic:"عَنْ",t:"ʿan",english:"about / from",cat:"Prepositions"},
+  {arabic:"مَعَ",t:"maʿa",english:"with",cat:"Prepositions"},
+  {arabic:"حَتّٰى",t:"ḥattā",english:"until",cat:"Prepositions"},
+  {arabic:"بَيْنَ",t:"bayna",english:"between",cat:"Prepositions"},
+  {arabic:"تَحْتَ",t:"taḥta",english:"under / beneath",cat:"Prepositions"},
+  {arabic:"فَوْقَ",t:"fawqa",english:"above / over",cat:"Prepositions"},
+  // Pronouns
+  {arabic:"هُوَ",t:"huwa",english:"he",cat:"Pronouns"},
+  {arabic:"هُمْ",t:"hum",english:"they (m.)",cat:"Pronouns"},
+  {arabic:"أَنْتَ",t:"anta",english:"you (m. singular)",cat:"Pronouns"},
+  {arabic:"أَنْتُمْ",t:"antum",english:"you all (m.)",cat:"Pronouns"},
+  {arabic:"أَنَا",t:"anā",english:"I",cat:"Pronouns"},
+  {arabic:"نَحْنُ",t:"naḥnu",english:"we",cat:"Pronouns"},
+  {arabic:"هِيَ",t:"hiya",english:"she",cat:"Pronouns"},
+  {arabic:"هُنَّ",t:"hunna",english:"they (f.)",cat:"Pronouns"},
+  {arabic:"هُمَا",t:"humā",english:"they two",cat:"Pronouns"},
+  {arabic:"أَنْتِ",t:"anti",english:"you (f. singular)",cat:"Pronouns"},
+  // Allah's Attributes
+  {arabic:"رَبٌّ",t:"rabb",english:"Lord / Sustainer",cat:"Allah's Attributes",freq:970},
+  {arabic:"رَحِيْمٌ",t:"raḥīm",english:"Most Merciful",cat:"Allah's Attributes",freq:182},
+  {arabic:"رَحْمٰنٌ",t:"raḥmān",english:"Most Compassionate",cat:"Allah's Attributes",freq:57},
+  {arabic:"عَلِيْمٌ",t:"ʿalīm",english:"All-Knowing",cat:"Allah's Attributes",freq:162},
+  {arabic:"عَزِيْزٌ",t:"ʿazīz",english:"Almighty",cat:"Allah's Attributes",freq:99},
+  {arabic:"حَكِيْمٌ",t:"ḥakīm",english:"All-Wise",cat:"Allah's Attributes",freq:97},
+  {arabic:"غَفُوْرٌ",t:"ghafūr",english:"Most Forgiving",cat:"Allah's Attributes",freq:91},
+  {arabic:"سَمِيْعٌ",t:"samīʿ",english:"All-Hearing",cat:"Allah's Attributes",freq:47},
+  {arabic:"بَصِيْرٌ",t:"baṣīr",english:"All-Seeing",cat:"Allah's Attributes",freq:53},
+  {arabic:"قَدِيْرٌ",t:"qadīr",english:"All-Powerful",cat:"Allah's Attributes",freq:45},
+  {arabic:"خَبِيْرٌ",t:"khabīr",english:"Ever-Aware",cat:"Allah's Attributes",freq:45},
+  {arabic:"تَوَّابٌ",t:"tawwāb",english:"Acceptor of Repentance",cat:"Allah's Attributes",freq:11},
+  {arabic:"وَدُوْدٌ",t:"wadūd",english:"Most Loving",cat:"Allah's Attributes",freq:2},
+  {arabic:"حَفِيْظٌ",t:"ḥafīẓ",english:"Guardian / Protector",cat:"Allah's Attributes",freq:26},
+  {arabic:"وَكِيْلٌ",t:"wakīl",english:"Trustee / Disposer",cat:"Allah's Attributes",freq:24},
+  {arabic:"حَلِيْمٌ",t:"ḥalīm",english:"Forbearing",cat:"Allah's Attributes",freq:15},
+  {arabic:"كَرِيْمٌ",t:"karīm",english:"Most Generous",cat:"Allah's Attributes",freq:5},
+  {arabic:"قَرِيْبٌ",t:"qarīb",english:"Near / Close",cat:"Allah's Attributes",freq:10},
+  // Faith & Worship
+  {arabic:"حَقٌّ",t:"ḥaqq",english:"truth / right",cat:"Faith & Worship",freq:247},
+  {arabic:"كِتَابٌ",t:"kitāb",english:"book / scripture",cat:"Faith & Worship",freq:261},
+  {arabic:"آيَةٌ",t:"āyah",english:"sign / verse",cat:"Faith & Worship",freq:382},
+  {arabic:"دِيْنٌ",t:"dīn",english:"religion / way of life",cat:"Faith & Worship",freq:92},
+  {arabic:"صَلَاةٌ",t:"ṣalāh",english:"prayer",cat:"Faith & Worship",freq:83},
+  {arabic:"نُوْرٌ",t:"nūr",english:"light",cat:"Faith & Worship",freq:43},
+  {arabic:"مَلَكٌ",t:"malak",english:"angel",cat:"Faith & Worship",freq:88},
+  {arabic:"غَيْبٌ",t:"ghayb",english:"the unseen",cat:"Faith & Worship",freq:49},
+  {arabic:"تَقْوٰى",t:"taqwā",english:"God-consciousness",cat:"Faith & Worship",freq:17},
+  {arabic:"زَكَاةٌ",t:"zakāh",english:"purifying charity",cat:"Faith & Worship",freq:32},
+  {arabic:"حِكْمَةٌ",t:"ḥikmah",english:"wisdom",cat:"Faith & Worship",freq:20},
+  {arabic:"عَهْدٌ",t:"ʿahd",english:"covenant / promise",cat:"Faith & Worship",freq:29},
+  {arabic:"حَمْدٌ",t:"ḥamd",english:"praise / gratitude",cat:"Faith & Worship",freq:43},
+  {arabic:"صِيَامٌ",t:"ṣiyām",english:"fasting",cat:"Faith & Worship",freq:8},
+  {arabic:"تَوْبَةٌ",t:"tawbah",english:"repentance",cat:"Faith & Worship",freq:17},
+  {arabic:"إِيْمَانٌ",t:"īmān",english:"faith / belief",cat:"Faith & Worship",freq:45},
+  {arabic:"إِسْلَامٌ",t:"islām",english:"submission / Islam",cat:"Faith & Worship",freq:8},
+  {arabic:"صَبْرٌ",t:"ṣabr",english:"patience / perseverance",cat:"Faith & Worship",freq:45},
+  {arabic:"شُكْرٌ",t:"shukr",english:"gratitude / thankfulness",cat:"Faith & Worship",freq:15},
+  {arabic:"دُعَاءٌ",t:"duʿāʾ",english:"supplication / prayer",cat:"Faith & Worship",freq:13},
+  // Akhirah
+  {arabic:"يَوْمٌ",t:"yawm",english:"day",cat:"Akhirah",freq:393},
+  {arabic:"عَذَابٌ",t:"ʿadhāb",english:"torment / punishment",cat:"Akhirah",freq:332},
+  {arabic:"نَارٌ",t:"nār",english:"fire / hellfire",cat:"Akhirah",freq:145},
+  {arabic:"جَنَّةٌ",t:"jannah",english:"paradise / garden",cat:"Akhirah",freq:147},
+  {arabic:"الْآخِرَةُ",t:"al-ākhirah",english:"the Hereafter",cat:"Akhirah",freq:115},
+  {arabic:"أَجْرٌ",t:"ajr",english:"reward",cat:"Akhirah",freq:105},
+  {arabic:"قِيَامَةٌ",t:"qiyāmah",english:"resurrection",cat:"Akhirah",freq:70},
+  {arabic:"حِسَابٌ",t:"ḥisāb",english:"reckoning / account",cat:"Akhirah",freq:39},
+  {arabic:"سَاعَةٌ",t:"sāʿah",english:"the Hour of Judgment",cat:"Akhirah",freq:47},
+  {arabic:"جَهَنَّمُ",t:"jahannam",english:"hellfire",cat:"Akhirah",freq:77},
+  {arabic:"مَوْتٌ",t:"mawt",english:"death",cat:"Akhirah",freq:93},
+  {arabic:"بَعْثٌ",t:"baʿth",english:"resurrection / raising",cat:"Akhirah",freq:12},
+  {arabic:"مِيْزَانٌ",t:"mīzān",english:"balance / scales",cat:"Akhirah",freq:15},
+  {arabic:"صِرَاطٌ",t:"ṣirāṭ",english:"path / way",cat:"Akhirah",freq:46},
+  {arabic:"شَفَاعَةٌ",t:"shafāʿah",english:"intercession",cat:"Akhirah",freq:10},
+  // Key Verbs
+  {arabic:"قَالَ",t:"qāla",english:"he said",cat:"Key Verbs",freq:1719},
+  {arabic:"كَانَ",t:"kāna",english:"he was / to be",cat:"Key Verbs",freq:1361},
+  {arabic:"آمَنَ",t:"āmana",english:"he believed",cat:"Key Verbs",freq:782},
+  {arabic:"عَلِمَ",t:"ʿalima",english:"he knew",cat:"Key Verbs",freq:518},
+  {arabic:"كَفَرَ",t:"kafara",english:"he disbelieved",cat:"Key Verbs",freq:461},
+  {arabic:"جَعَلَ",t:"jaʿala",english:"he made / placed",cat:"Key Verbs",freq:346},
+  {arabic:"عَمِلَ",t:"ʿamila",english:"he did / worked",cat:"Key Verbs",freq:318},
+  {arabic:"شَاءَ",t:"shāʾa",english:"he willed",cat:"Key Verbs",freq:277},
+  {arabic:"خَلَقَ",t:"khalaqa",english:"he created",cat:"Key Verbs",freq:248},
+  {arabic:"أَمَرَ",t:"amara",english:"he commanded",cat:"Key Verbs",freq:232},
+  {arabic:"دَعَا",t:"daʿā",english:"he called / prayed",cat:"Key Verbs",freq:197},
+  {arabic:"أَنْزَلَ",t:"anzala",english:"he revealed / sent down",cat:"Key Verbs",freq:190},
+  {arabic:"هَدٰى",t:"hadā",english:"he guided",cat:"Key Verbs",freq:163},
+  {arabic:"ذَكَرَ",t:"dhakara",english:"he remembered",cat:"Key Verbs",freq:163},
+  {arabic:"صَبَرَ",t:"ṣabara",english:"he was patient",cat:"Key Verbs",freq:94},
+  {arabic:"شَكَرَ",t:"shakara",english:"he was grateful",cat:"Key Verbs",freq:63},
+  {arabic:"رَزَقَ",t:"razaqa",english:"he provided",cat:"Key Verbs",freq:122},
+  {arabic:"غَفَرَ",t:"ghafara",english:"he forgave",cat:"Key Verbs",freq:95},
+  {arabic:"تَابَ",t:"tāba",english:"he repented",cat:"Key Verbs",freq:44},
+  {arabic:"رَجَعَ",t:"rajaʿa",english:"he returned",cat:"Key Verbs",freq:64},
+  // World & Creation
+  {arabic:"أَرْضٌ",t:"arḍ",english:"earth / land",cat:"World & Creation",freq:461},
+  {arabic:"سَمَاءٌ",t:"samāʾ",english:"sky / heaven",cat:"World & Creation",freq:310},
+  {arabic:"نَاسٌ",t:"nās",english:"people / mankind",cat:"World & Creation",freq:248},
+  {arabic:"قَوْمٌ",t:"qawm",english:"people / nation",cat:"World & Creation",freq:383},
+  {arabic:"مَاءٌ",t:"māʾ",english:"water",cat:"World & Creation",freq:63},
+  {arabic:"شَمْسٌ",t:"shams",english:"sun",cat:"World & Creation",freq:33},
+  {arabic:"قَمَرٌ",t:"qamar",english:"moon",cat:"World & Creation",freq:27},
+  {arabic:"نَجْمٌ",t:"najm",english:"star",cat:"World & Creation",freq:13},
+  {arabic:"شَجَرَةٌ",t:"shajarah",english:"tree",cat:"World & Creation",freq:26},
+  {arabic:"رِيْحٌ",t:"rīḥ",english:"wind",cat:"World & Creation",freq:29},
+  // The Human Being
+  {arabic:"نَفْسٌ",t:"nafs",english:"soul / self",cat:"The Human Being",freq:293},
+  {arabic:"قَلْبٌ",t:"qalb",english:"heart",cat:"The Human Being",freq:132},
+  {arabic:"وَجْهٌ",t:"wajh",english:"face / direction",cat:"The Human Being",freq:72},
+  {arabic:"يَدٌ",t:"yad",english:"hand",cat:"The Human Being",freq:118},
+  {arabic:"عَيْنٌ",t:"ʿayn",english:"eye",cat:"The Human Being",freq:47},
+  {arabic:"رُوْحٌ",t:"rūḥ",english:"spirit / soul",cat:"The Human Being",freq:21},
+  {arabic:"لِسَانٌ",t:"lisān",english:"tongue / language",cat:"The Human Being",freq:25},
+  {arabic:"عَقْلٌ",t:"ʿaql",english:"intellect / reason",cat:"The Human Being"},
+  // Prophets & Stories
+  {arabic:"نَبِيٌّ",t:"nabī",english:"prophet",cat:"Prophets & Stories",freq:75},
+  {arabic:"رَسُوْلٌ",t:"rasūl",english:"messenger",cat:"Prophets & Stories",freq:332},
+  {arabic:"مُوْسٰى",t:"mūsā",english:"Moses (Mūsā) عليه السلام",cat:"Prophets & Stories",freq:136},
+  {arabic:"عِيْسٰى",t:"ʿīsā",english:"Jesus (ʿĪsā) عليه السلام",cat:"Prophets & Stories",freq:25},
+  {arabic:"إِبْرَاهِيْمُ",t:"ibrāhīm",english:"Abraham (Ibrāhīm) عليه السلام",cat:"Prophets & Stories",freq:69},
+  {arabic:"مُحَمَّدٌ",t:"muḥammad",english:"Muhammad ﷺ",cat:"Prophets & Stories",freq:4},
+  {arabic:"يُوْسُفُ",t:"yūsuf",english:"Joseph (Yūsuf) عليه السلام",cat:"Prophets & Stories",freq:27},
+  {arabic:"نُوْحٌ",t:"nūḥ",english:"Noah (Nūḥ) عليه السلام",cat:"Prophets & Stories",freq:43},
+  {arabic:"آدَمُ",t:"ādam",english:"Adam عليه السلام",cat:"Prophets & Stories",freq:25},
+  {arabic:"دَاوُوْدُ",t:"dāwūd",english:"David (Dāwūd) عليه السلام",cat:"Prophets & Stories",freq:16},
+  {arabic:"سُلَيْمَانُ",t:"sulaymān",english:"Solomon (Sulaymān) عليه السلام",cat:"Prophets & Stories",freq:17},
+  {arabic:"يَحْيٰى",t:"yaḥyā",english:"John the Baptist (Yaḥyā) عليه السلام",cat:"Prophets & Stories",freq:5},
+  // Character & Ethics
+  {arabic:"عَدْلٌ",t:"ʿadl",english:"justice / equity",cat:"Character & Ethics",freq:14},
+  {arabic:"خَيْرٌ",t:"khayr",english:"good / goodness",cat:"Character & Ethics",freq:176},
+  {arabic:"شَرٌّ",t:"sharr",english:"evil / harm",cat:"Character & Ethics",freq:30},
+  {arabic:"حَسَنَةٌ",t:"ḥasanah",english:"good deed",cat:"Character & Ethics",freq:52},
+  {arabic:"سَيِّئَةٌ",t:"sayyi'ah",english:"bad deed / sin",cat:"Character & Ethics",freq:40},
+  {arabic:"أَمَانَةٌ",t:"amānah",english:"trust / honesty",cat:"Character & Ethics",freq:6},
+  {arabic:"صِدْقٌ",t:"ṣidq",english:"truthfulness",cat:"Character & Ethics",freq:10},
+  {arabic:"فَسَادٌ",t:"fasād",english:"corruption / mischief",cat:"Character & Ethics",freq:50},
+  {arabic:"رَحْمَةٌ",t:"raḥmah",english:"mercy / compassion",cat:"Character & Ethics",freq:79},
+  {arabic:"حُبٌّ",t:"ḥubb",english:"love",cat:"Character & Ethics",freq:83},
+  {arabic:"كِبْرٌ",t:"kibr",english:"arrogance / pride",cat:"Character & Ethics",freq:9},
+  {arabic:"غَضَبٌ",t:"ghaḍab",english:"anger / wrath",cat:"Character & Ethics",freq:25},
+  {arabic:"خَوْفٌ",t:"khawf",english:"fear",cat:"Character & Ethics",freq:40},
+];
+
+// ============================================================
+//  MUQATTAAT DATA
+// ============================================================
+const muqattaat = [
+  {arabic:"الٓمٓ",name:"Alif Lam Mim",surahs:[{n:2,name:"Al-Baqarah"},{n:3,name:"Āl ʿImrān"},{n:29,name:"Al-ʿAnkabūt"},{n:30,name:"Ar-Rūm"},{n:31,name:"Luqmān"},{n:32,name:"As-Sajdah"}]},
+  {arabic:"الٓمٓصٓ",name:"Alif Lam Mim Sad",surahs:[{n:7,name:"Al-Aʿrāf"}]},
+  {arabic:"الٓرٰ",name:"Alif Lam Ra",surahs:[{n:10,name:"Yūnus"},{n:11,name:"Hūd"},{n:12,name:"Yūsuf"},{n:14,name:"Ibrāhīm"},{n:15,name:"Al-Ḥijr"}]},
+  {arabic:"الٓمٓرٰ",name:"Alif Lam Mim Ra",surahs:[{n:13,name:"Ar-Raʿd"}]},
+  {arabic:"كٓهيعٓصٓ",name:"Kaf Ha Ya Ain Sad",surahs:[{n:19,name:"Maryam"}]},
+  {arabic:"طٰهٰ",name:"Ta Ha",surahs:[{n:20,name:"Ṭā Hā"}]},
+  {arabic:"طٰسٓمٓ",name:"Ta Sin Mim",surahs:[{n:26,name:"Ash-Shuʿarāʾ"},{n:28,name:"Al-Qaṣaṣ"}]},
+  {arabic:"طٰسٓ",name:"Ta Sin",surahs:[{n:27,name:"An-Naml"}]},
+  {arabic:"يٰسٓ",name:"Ya Sin",surahs:[{n:36,name:"Yā Sīn"}]},
+  {arabic:"صٓ",name:"Sad",surahs:[{n:38,name:"Ṣād"}]},
+  {arabic:"حٰمٓ",name:"Ha Mim",surahs:[{n:40,name:"Ghāfir"},{n:41,name:"Fuṣṣilat"},{n:42,name:"Ash-Shūrā"},{n:43,name:"Az-Zukhruf"},{n:44,name:"Ad-Dukhān"},{n:45,name:"Al-Jāthiyah"},{n:46,name:"Al-Aḥqāf"}]},
+  {arabic:"عٓسٓقٓ",name:"Ain Sin Qaf",surahs:[{n:42,name:"Ash-Shūrā"}]},
+  {arabic:"قٓ",name:"Qaf",surahs:[{n:50,name:"Qāf"}]},
+  {arabic:"نٓ",name:"Nun",surahs:[{n:68,name:"Al-Qalam"}]},
+];
+
+// ============================================================
+//  SLIDES DATA
+// ============================================================
+const slides = [
+  // 0 — Title
+  { html:`
+    <p class="bismillah arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+    <h1 style="color:white;font-size:26px;margin:10px 0 8px;font-weight:700">Understand the Quran</h1>
+    <p style="color:#88BBBB;font-size:13px;line-height:1.7">A practical vocabulary session<br>to connect with Allah's words ﷻ</p>
+    <p style="color:var(--gold);font-size:12px;margin-top:14px;font-style:italic">"The best of you are those who learn the Quran and teach it."<br><span style="color:#88BBBB">— Prophet Muhammad ﷺ (Bukhāri)</span></p>
+  `},
+  // 1 — The Big Hook
+  { html:`
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:6px;letter-spacing:1px">THE MIRACLE OF THE QURAN</p>
+    <div class="stat-grid-3" style="margin-bottom:14px">
+      <div class="stat-box"><div class="num">114</div><div class="lbl">Surahs</div></div>
+      <div class="stat-box"><div class="num">6,236</div><div class="lbl">Ayahs</div></div>
+      <div class="stat-box"><div class="num">77,449</div><div class="lbl">Words</div></div>
+    </div>
+    <div class="stat-grid-3">
+      <div class="stat-box"><div class="num">320,015</div><div class="lbl">Letters</div></div>
+      <div class="stat-box"><div class="num">558</div><div class="lbl">Rukūʿs</div></div>
+      <div class="stat-box"><div class="num">30</div><div class="lbl">Juz</div></div>
+    </div>
+  `},
+  // 2 — Harakat Stats
+  { html:`
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:10px;letter-spacing:1px">VOWEL MARKS (ḤARAKĀT)</p>
+    <p style="color:white;font-size:12px;margin-bottom:12px;line-height:1.6">Every letter in the Quran is precisely voweled.<br>These marks ensure the word of Allah is preserved perfectly.</p>
+    <div class="stat-grid" style="margin-bottom:8px">
+      <div class="stat-box">
+        <div class="num arabic" style="font-size:26px">◌َ</div>
+        <div class="num" style="font-size:18px">~53,000</div>
+        <div class="lbl">Zabar (Fatḥah)<br>short "a" sound</div>
+      </div>
+      <div class="stat-box">
+        <div class="num arabic" style="font-size:26px">◌ِ</div>
+        <div class="num" style="font-size:18px">~39,000</div>
+        <div class="lbl">Zer (Kasrah)<br>short "i" sound</div>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="num arabic" style="font-size:26px">◌ُ</div>
+        <div class="num" style="font-size:18px">~8,000</div>
+        <div class="lbl">Pesh (Ḍammah)<br>short "u" sound</div>
+      </div>
+      <div class="stat-box">
+        <div class="num arabic" style="font-size:26px">◌ّ</div>
+        <div class="num" style="font-size:18px">~19,000</div>
+        <div class="lbl">Shaddah<br>doubled letter</div>
+      </div>
+    </div>
+  `},
+  // 3 — Rukoo & Structure
+  { html:`
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:10px;letter-spacing:1px">STRUCTURE OF THE QURAN</p>
+    <div class="stat-grid" style="margin-bottom:8px">
+      <div class="stat-box"><div class="num">558</div><div class="lbl">Rukūʿs<br>(paragraph units)</div></div>
+      <div class="stat-box"><div class="num">14</div><div class="lbl">Sajdah<br>Tilāwah verses</div></div>
+    </div>
+    <div class="stat-grid" style="margin-bottom:8px">
+      <div class="stat-box"><div class="num">29</div><div class="lbl">Surahs open with<br>Muqaṭṭaʿāt letters</div></div>
+      <div class="stat-box"><div class="num">86</div><div class="lbl">Makkan<br>Surahs</div></div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">28</div><div class="lbl">Madinan<br>Surahs</div></div>
+      <div class="stat-box"><div class="num">~23</div><div class="lbl">Years of<br>Revelation</div></div>
+    </div>
+  `},
+  // 4 — The 80% Hook
+  { html:`
+    <p style="color:var(--gold);font-size:52px;font-weight:700;line-height:1">80%</p>
+    <p style="color:white;font-size:15px;margin:8px 0 4px;font-weight:600">of the Quran understood</p>
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:14px">with just <strong style="color:var(--gold)">~300 words</strong></p>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">~300</div><div class="lbl">Core words<br>= 80% comprehension</div></div>
+      <div class="stat-box"><div class="num">~750</div><div class="lbl">Words<br>= 85% comprehension</div></div>
+    </div>
+    <p style="color:#88BBBB;font-size:12px;margin-top:12px">These aren't just vocabulary — they are the words Allah chose to speak to us.</p>
+  `},
+  // 5 — Most Frequent Words
+  { html:`
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:10px;letter-spacing:1px">MOST FREQUENT WORDS</p>
+    <div style="width:100%;text-align:left">
+      ${[
+        ["قَالَ","qāla","he said",1719],
+        ["كَانَ","kāna","he was",1361],
+        ["رَبٌّ","rabb","Lord",970],
+        ["آمَنَ","āmana","believed",782],
+        ["آيَةٌ","āyah","sign/verse",382],
+        ["يَوْمٌ","yawm","day",393],
+      ].map(([ar,tr,en,n])=>`
+        <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+          <span style="font-family:'Amiri',serif;color:var(--gold);font-size:22px;direction:rtl;width:80px;text-align:right">${ar}</span>
+          <span style="color:#88BBBB;font-size:11px;flex:1">${en} <span style="color:#555">(${tr})</span></span>
+          <span style="background:rgba(196,154,43,0.15);color:var(--gold);font-size:11px;padding:2px 8px;border-radius:10px;font-weight:700">${n.toLocaleString()}×</span>
+        </div>`).join('')}
+    </div>
+  `},
+  // 6 — Why Learn
+  { html:`
+    <p style="color:var(--gold);font-size:15px;font-weight:700;margin-bottom:12px">Why Learn Quranic Vocabulary?</p>
+    <div style="text-align:left;width:100%">
+      ${[
+        ["🤲","Deepen your Salah","Know what you're reciting in every prayer"],
+        ["💡","Understand Khutbahs","Follow Friday sermons without translation"],
+        ["📖","Read Quran directly","Build independence from translations"],
+        ["❤️","Feel the meaning","Be moved when Allah's words are recited"],
+        ["🎯","Just 5 words a day","Complete core vocabulary in months"],
+      ].map(([ic,bold,sub])=>`
+        <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+          <span style="font-size:18px">${ic}</span>
+          <div><p style="color:white;font-size:13px;font-weight:600">${bold}</p><p style="color:#88BBBB;font-size:12px">${sub}</p></div>
+        </div>`).join('')}
+    </div>
+  `},
+  // 7 — Today's Categories
+  { html:`
+    <p style="color:var(--gold);font-size:15px;font-weight:700;margin-bottom:10px">Today's Categories</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;text-align:left">
+      ${["Particles & Connectors","Prepositions","Pronouns","Allah's Attributes","Faith & Worship","Akhirah","Key Verbs","World & Creation","The Human Being","Prophets & Stories","Character & Ethics","Ḥurūf Muqaṭṭaʿāt"].map(c=>
+        `<div style="background:rgba(255,255,255,0.07);border-radius:8px;padding:8px 10px;color:#ccc;font-size:11px">📌 ${c}</div>`
+      ).join('')}
+    </div>
+  `},
+  // 8 — How to Use
+  { html:`
+    <p style="color:var(--gold);font-size:15px;font-weight:700;margin-bottom:12px">How to Use This App</p>
+    <div style="text-align:left;width:100%">
+      ${[
+        ["🎤","Present","Walk through these slides in your session"],
+        ["📅","Daily Plan","Pick any day — study 5 words, quiz, flashcard"],
+        ["📖","Learn","Browse all words by category"],
+        ["🔡","Muqaṭṭaʿāt","Reference tab — mysterious letters of the Quran"],
+        ["📝","Quiz","Multiple choice — Arabic↔English"],
+        ["🔄","Flashcards","Tap to flip — mark known or still learning"],
+      ].map(([ic,tab,desc])=>`
+        <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);align-items:center">
+          <span style="font-size:16px;width:22px">${ic}</span>
+          <span style="color:var(--gold);font-size:12px;font-weight:700;width:90px">${tab}</span>
+          <span style="color:#88BBBB;font-size:12px;flex:1">${desc}</span>
+        </div>`).join('')}
+    </div>
+    <p style="color:var(--gold);font-size:12px;margin-top:12px;font-style:italic">Share this file with anyone — works offline, no app needed.</p>
+  `},
+  // 9 — Closing
+  { html:`
+    <p class="bismillah arabic">اَللّٰهُمَّ عَلِّمْنَا مَا يَنْفَعُنَا</p>
+    <p style="color:#88BBBB;font-size:12px;font-style:italic;margin-bottom:16px">"O Allah, teach us what benefits us"</p>
+    <h1 style="color:white;font-size:22px;margin-bottom:8px">Let's Begin! بِسْمِ اللّٰهِ</h1>
+    <p style="color:#88BBBB;font-size:13px;margin-bottom:14px">Use the tabs above to browse,<br>quiz, and learn together.</p>
+    <div class="stat-grid-3">
+      <div class="stat-box"><div class="num">${allWords.length}</div><div class="lbl">Words in app</div></div>
+      <div class="stat-box"><div class="num">30</div><div class="lbl">Day plan</div></div>
+      <div class="stat-box"><div class="num">∞</div><div class="lbl">Barakah</div></div>
+    </div>
+  `},
+];
+
+// ============================================================
+//  STATE
+// ============================================================
+const cats = [...new Set(allWords.map(w => w.cat))];
+const NUM_DAYS = 30;
+function getWordsByDay(d){ const s=((d-1)*5)%allWords.length; return Array.from({length:5},(_,i)=>allWords[(s+i)%allWords.length]); }
+function shuffle(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+
+let activeTab="present", slideIdx=0, browseCat=cats[0], selectedDay=1;
+let quizState={}, flashState={}, quizMode="mixed";
+
+// ============================================================
+//  RENDER ROUTER
+// ============================================================
+function render(){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===activeTab));
+  const app=document.getElementById('app');
+  if(activeTab==="present"){ app.innerHTML=renderPresent(); }
+  else if(activeTab==="days"){ app.innerHTML=renderDays(); }
+  else if(activeTab==="learn"){ app.innerHTML=renderLearn(); }
+  else if(activeTab==="muqattaat"){ app.innerHTML=renderMuqattaat(); }
+  else if(activeTab==="quiz"){ renderQuizView(app); }
+  else if(activeTab==="flash"){ renderFlashView(app); }
+  bindAll();
+}
+
+// ============================================================
+//  PRESENT
+// ============================================================
+function renderPresent(){
+  const s=slides[slideIdx];
+  return `
+    <div class="slide">${s.html}</div>
+    <div class="slide-nav">
+      <button class="prev" data-action="slidePrev" ${slideIdx===0?'disabled':''}>◀ Prev</button>
+      <span style="color:#888;font-size:13px;align-self:center">${slideIdx+1} / ${slides.length}</span>
+      <button class="next" data-action="slideNext" ${slideIdx===slides.length-1?'disabled':''}>Next ▶</button>
+    </div>
+    <div class="slide-dots">${slides.map((_,i)=>`<div class="dot ${i===slideIdx?'active':''}"></div>`).join('')}</div>
+    <div style="margin-top:16px">
+      <div class="info-card">
+        <h3>📊 App at a Glance</h3>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;text-align:center">
+          <div><div style="color:var(--teal);font-size:20px;font-weight:700">${allWords.length}</div><div style="color:#888;font-size:11px">Words</div></div>
+          <div><div style="color:var(--teal);font-size:20px;font-weight:700">${cats.length}</div><div style="color:#888;font-size:11px">Categories</div></div>
+          <div><div style="color:var(--teal);font-size:20px;font-weight:700">30</div><div style="color:#888;font-size:11px">Day Plan</div></div>
+          <div><div style="color:var(--teal);font-size:20px;font-weight:700">14</div><div style="color:#888;font-size:11px">Muqaṭṭaʿāt</div></div>
+        </div>
+      </div>
+      <div class="info-card teal">
+        <h3>💾 How to Share This App</h3>
+        <p>Save this HTML file and send it via WhatsApp, email, or Google Drive. It works <strong>fully offline</strong> — no internet needed after download. Or host it free on <strong>GitHub Pages</strong> for a shareable link (recommended for wider sharing).</p>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+//  DAYS
+// ============================================================
+function renderDays(){
+  const dayBtns=Array.from({length:NUM_DAYS},(_,i)=>i+1).map(d=>
+    `<button class="day-btn ${d===selectedDay?'active':''}" data-day="${d}">Day ${d}</button>`
+  ).join('');
+  const words=getWordsByDay(selectedDay);
+  const rows=words.map(w=>`
+    <div class="word-row">
+      <div><span class="eng">${w.english}</span><span class="translit">(${w.t})</span></div>
+      <span class="arb arabic">${w.arabic}</span>
+    </div>`).join('');
+  return `
+    <div style="background:var(--dark-bg);border-radius:14px;padding:14px;margin-bottom:14px;text-align:center">
+      <p style="color:var(--gold);font-size:13px;font-weight:700;letter-spacing:1px">30-DAY QURʾĀNIC VOCABULARY PLAN</p>
+      <p style="color:#88BBBB;font-size:12px;margin-top:3px">5 words per day · Pick any day to begin</p>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3 style="color:var(--dark-teal);font-size:15px;font-weight:700">Choose a Day</h3>
+      <span style="font-size:12px;color:#aaa">Day ${selectedDay} selected</span>
+    </div>
+    <div class="day-grid">${dayBtns}</div>
+    <div class="day-words-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span style="color:var(--dark-teal);font-size:14px;font-weight:700">Day ${selectedDay} — 5 Words</span>
+        <span style="background:var(--gold);color:white;font-size:11px;padding:3px 10px;border-radius:12px">Day ${selectedDay}</span>
+      </div>
+      ${rows}
+    </div>
+    <div class="day-actions">
+      <button class="quiz-day" data-action="quizDay">📝 Quiz These Words</button>
+      <button class="flash-day" data-action="flashDay">🔄 Flashcards</button>
+    </div>`;
+}
+
+// ============================================================
+//  LEARN
+// ============================================================
+function renderLearn(){
+  const pills=cats.map(c=>`<button class="cat-pill ${c===browseCat?'active':''}" data-browsecat="${c}">${c}</button>`).join('');
+  const items=allWords.filter(w=>w.cat===browseCat).map(w=>`
+    <div class="browse-item">
+      <div>
+        <div class="eng-col">${w.english}</div>
+        <div style="font-size:11px;color:#aaa;font-style:italic">${w.t}${w.freq?` · ${w.freq}× in Quran`:''}</div>
+      </div>
+      <span class="arb-col arabic">${w.arabic}</span>
+    </div>`).join('');
+  const count=allWords.filter(w=>w.cat===browseCat).length;
+  return `
+    <div style="background:white;border-radius:12px;padding:12px;margin-bottom:12px;border:1px solid #e0e0e0">
+      <p style="font-size:12px;color:#888;margin-bottom:8px;font-weight:700">BROWSE BY CATEGORY — ${count} words</p>
+      <div class="cat-pills">${pills}</div>
+    </div>
+    <div class="browse-list">${items}</div>`;
+}
+
+// ============================================================
+//  MUQATTAAT
+// ============================================================
+function renderMuqattaat(){
+  const cards=muqattaat.map(m=>`
+    <div class="mq-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <p style="font-size:13px;font-weight:700;color:var(--dark-teal)">${m.name}</p>
+          <p style="font-size:11px;color:#aaa;margin-top:2px">Appears in ${m.surahs.length} Surah${m.surahs.length>1?'s':''}</p>
+        </div>
+        <span class="arabic" style="font-size:34px;color:var(--gold);line-height:1.4">${m.arabic}</span>
+      </div>
+      <div>${m.surahs.map(s=>`<span class="surah-pill">${s.n}. ${s.name}</span>`).join('')}</div>
+    </div>`).join('');
+  return `
+    <div style="background:var(--dark-bg);border-radius:14px;padding:18px;text-align:center;margin-bottom:14px">
+      <p class="arabic" style="color:var(--gold);font-size:28px;margin-bottom:6px">الحروف المقطعة</p>
+      <p style="color:white;font-size:15px;font-weight:600;margin-bottom:4px">Ḥurūf Muqaṭṭaʿāt</p>
+      <p style="color:#88BBBB;font-size:12px;line-height:1.7">The 14 "mysterious letters" opening 29 Surahs.<br>Allah alone knows their full meaning.</p>
+    </div>
+    <div class="info-card" style="border-left-color:var(--teal);margin-bottom:14px">
+      <h3>📌 Key Facts</h3>
+      <p>
+        • Each letter earns <strong>10 rewards</strong> when recited (Tirmidhi)<br>
+        • They appear at the start of <strong>29 out of 114</strong> Surahs<br>
+        • They are recited by letter name: <strong>Alif · Lam · Mim</strong> (3 letters, 30 rewards)<br>
+        • They prove the Quran's miraculous nature — Arabs knew these letters but couldn't produce anything like the Quran<br>
+        • Scholars have 40+ opinions on their meaning; the safest position is to believe in them and recite them with tawakkul
+      </p>
+    </div>
+    ${cards}`;
+}
+
+// ============================================================
+//  QUIZ
+// ============================================================
+function startQuiz(words){
+  const pool=shuffle(words).slice(0,Math.min(10,words.length));
+  quizState={
+    questions:pool.map(w=>{
+      const dir=quizMode==="mixed"?(Math.random()>0.5?"ar2en":"en2ar"):quizMode;
+      return {word:w,options:shuffle([w,...shuffle(allWords.filter(x=>x.english!==w.english)).slice(0,3)]),dir};
+    }),
+    index:0,score:0,selected:null,finished:false
+  };
+  activeTab="quiz"; render();
+}
+
+function renderQuizView(app){
+  if(!quizState.questions||!quizState.questions.length){ app.innerHTML=renderQuizHome(); bindAll(); return; }
+  if(quizState.finished){
+    const pct=quizState.score/quizState.questions.length;
+    app.innerHTML=`
+      <div class="results">
+        <div class="emoji">${pct>=0.8?"🌟":pct>=0.5?"👍":"📖"}</div>
+        <div class="sc">${quizState.score} / ${quizState.questions.length}</div>
+        <p class="msg">${pct>=0.8?"MashaAllah! Excellent!":pct>=0.5?"Good effort — keep going!":"Keep reviewing, inshaAllah you'll get there!"}</p>
+        <div class="btn-row">
+          <button class="btn-primary" data-action="retryQuiz">Retry</button>
+          <button class="btn-secondary" data-action="quizHome">New Quiz</button>
+        </div>
+      </div>`; bindAll(); return;
+  }
+  const q=quizState.questions[quizState.index];
+  const prog=(quizState.index/quizState.questions.length)*100;
+  const opts=q.options.map((opt,i)=>{
+    const correct=opt.english===q.word.english;
+    let cls="option-btn"+(q.dir==="en2ar"?" arabic-opt":"");
+    if(quizState.selected!==null){ if(correct) cls+=" correct"; else if(quizState.selected===i) cls+=" wrong"; }
+    return `<button class="${cls}" data-option="${i}" ${quizState.selected!==null?"disabled":""}>${q.dir==="ar2en"?opt.english:opt.arabic}</button>`;
+  }).join('');
+  app.innerHTML=`
+    <div class="progress-bar"><div class="fill" style="width:${prog}%"></div></div>
+    <div class="quiz-header"><span class="info">Q${quizState.index+1} / ${quizState.questions.length}</span><span class="score">✅ ${quizState.score}</span></div>
+    <div class="quiz-prompt">
+      <p class="qlabel">${q.dir==="ar2en"?"What does this mean?":"Which Arabic word is this?"}</p>
+      <p class="qword ${q.dir==="ar2en"?"arabic":""}">${q.dir==="ar2en"?q.word.arabic:q.word.english}</p>
+      ${q.dir==="ar2en"?`<p class="qtranslit">${q.word.t}</p>`:''}
+    </div>
+    <div class="options-grid">${opts}</div>
+    <button class="btn-back" data-action="quizHome" style="margin-top:14px">← Back to Quiz Menu</button>`;
+  bindAll();
+}
+
+function renderQuizHome(){
+  const dayBtns=Array.from({length:NUM_DAYS},(_,i)=>i+1).map(d=>
+    `<button class="day-btn" data-quizday="${d}" style="font-size:11px">D${d}</button>`).join('');
+  return `
+    <div style="background:var(--dark-bg);border-radius:14px;padding:16px;text-align:center;margin-bottom:14px">
+      <p style="color:var(--gold);font-size:17px;font-weight:700;margin-bottom:4px">📝 Quiz Yourself</p>
+      <p style="color:#88BBBB;font-size:12px">Choose a category or day, then pick your question style</p>
+    </div>
+    <p class="section-title">Question Style</p>
+    <div class="mode-toggle">
+      <button class="mode-btn ${quizMode==="ar2en"?"active":""}" data-qmode="ar2en">Arabic → English</button>
+      <button class="mode-btn ${quizMode==="en2ar"?"active":""}" data-qmode="en2ar">English → Arabic</button>
+      <button class="mode-btn ${quizMode==="mixed"?"active":""}" data-qmode="mixed">Mixed</button>
+    </div>
+    <p class="section-title">Quiz by Day</p>
+    <div class="day-grid" style="grid-template-columns:repeat(6,1fr)">${dayBtns}</div>
+    <p class="section-title">Quiz by Category</p>
+    <div class="cat-pick-grid">
+      <button class="cat-pick-btn gd" data-quizcat="all">⭐ All ${allWords.length} Words</button>
+      ${cats.map(c=>{const cnt=allWords.filter(w=>w.cat===c).length;
+        return `<button class="cat-pick-btn" data-quizcat="${c}">${c} <span style="float:right;color:#aaa;font-size:11px">${cnt}</span></button>`;
+      }).join('')}
+    </div>`;
+}
+
+// ============================================================
+//  FLASHCARDS
+// ============================================================
+function startFlash(words){
+  flashState={deck:shuffle(words),index:0,flipped:false,known:0};
+  activeTab="flash"; render();
+}
+
+function renderFlashView(app){
+  if(!flashState.deck||!flashState.deck.length){ app.innerHTML=renderFlashHome(); bindAll(); return; }
+  if(flashState.index>=flashState.deck.length){
+    app.innerHTML=`
+      <div class="results">
+        <div class="emoji">✅</div>
+        <div class="sc">Session Done!</div>
+        <p class="msg">You marked <strong>${flashState.known}</strong> of <strong>${flashState.deck.length}</strong> as known. MashaAllah!</p>
+        <div class="btn-row">
+          <button class="btn-primary" data-action="retryFlash">Shuffle Again</button>
+          <button class="btn-secondary" data-action="flashHome">New Deck</button>
+        </div>
+      </div>`; bindAll(); return;
+  }
+  const w=flashState.deck[flashState.index];
+  const prog=(flashState.index/flashState.deck.length)*100;
+  app.innerHTML=`
+    <div class="progress-bar"><div class="fill" style="width:${prog}%"></div></div>
+    <div class="quiz-header"><span class="info">${flashState.index+1} / ${flashState.deck.length}</span><span class="score" style="color:var(--gold)">${w.cat}</span></div>
+    <div class="flashcard ${flashState.flipped?"back":"front"}" data-action="flipCard">
+      ${!flashState.flipped?`<p class="f-arabic arabic">${w.arabic}</p><p class="f-hint">Tap to reveal meaning</p>`
+      :`<p class="f-english">${w.english}</p><p class="f-arabic arabic" style="font-size:34px;color:var(--teal)">${w.arabic}</p><p class="f-translit">${w.t}</p>${w.freq?`<p class="f-freq">Appears ${w.freq}× in Quran</p>`:''}`}
+    </div>
+    <div class="flash-actions" ${!flashState.flipped?'style="opacity:0.35;pointer-events:none"':''}>
+      <button class="still" data-action="flashLearning">Still Learning</button>
+      <button class="got" data-action="flashGotIt">Got It ✓</button>
+    </div>
+    <button class="btn-back" data-action="flashHome" style="margin-top:12px">← Back to Flashcard Menu</button>`;
+  bindAll();
+}
+
+function renderFlashHome(){
+  const dayBtns=Array.from({length:NUM_DAYS},(_,i)=>i+1).map(d=>
+    `<button class="day-btn" data-flashday="${d}" style="font-size:11px">D${d}</button>`).join('');
+  return `
+    <div style="background:var(--dark-bg);border-radius:14px;padding:16px;text-align:center;margin-bottom:14px">
+      <p style="color:var(--gold);font-size:17px;font-weight:700;margin-bottom:4px">🔄 Flashcards</p>
+      <p style="color:#88BBBB;font-size:12px">See Arabic → think → reveal meaning</p>
+    </div>
+    <p class="section-title">By Day</p>
+    <div class="day-grid" style="grid-template-columns:repeat(6,1fr)">${dayBtns}</div>
+    <p class="section-title">By Category</p>
+    <div class="cat-pick-grid">
+      <button class="cat-pick-btn gd" data-flashcat="all">⭐ All ${allWords.length} Words</button>
+      ${cats.map(c=>{const cnt=allWords.filter(w=>w.cat===c).length;
+        return `<button class="cat-pick-btn" data-flashcat="${c}">${c} <span style="float:right;color:#aaa;font-size:11px">${cnt}</span></button>`;
+      }).join('')}
+    </div>`;
+}
+
+// ============================================================
+//  BIND ALL
+// ============================================================
+function bindAll(){
+  document.querySelectorAll('.nav-tab').forEach(el=>{
+    el.onclick=()=>{ activeTab=el.dataset.tab; if(activeTab==="quiz"&&!quizState.questions) quizState={}; if(activeTab==="flash"&&!flashState.deck) flashState={}; render(); };
+  });
+  qs('[data-action="slideNext"]',el=>el.onclick=()=>{ if(slideIdx<slides.length-1){slideIdx++;render();} });
+  qs('[data-action="slidePrev"]',el=>el.onclick=()=>{ if(slideIdx>0){slideIdx--;render();} });
+  document.querySelectorAll('[data-day]').forEach(el=>el.onclick=()=>{ selectedDay=parseInt(el.dataset.day); render(); });
+  qs('[data-action="quizDay"]',el=>el.onclick=()=>startQuiz(getWordsByDay(selectedDay)));
+  qs('[data-action="flashDay"]',el=>el.onclick=()=>startFlash(getWordsByDay(selectedDay)));
+  document.querySelectorAll('[data-browsecat]').forEach(el=>el.onclick=()=>{ browseCat=el.dataset.browsecat; render(); });
+  document.querySelectorAll('[data-qmode]').forEach(el=>el.onclick=()=>{ quizMode=el.dataset.qmode; document.querySelectorAll('[data-qmode]').forEach(b=>b.classList.toggle('active',b.dataset.qmode===quizMode)); });
+  document.querySelectorAll('[data-quizcat]').forEach(el=>el.onclick=()=>startQuiz(el.dataset.quizcat==="all"?allWords:allWords.filter(w=>w.cat===el.dataset.quizcat)));
+  document.querySelectorAll('[data-quizday]').forEach(el=>el.onclick=()=>startQuiz(getWordsByDay(parseInt(el.dataset.quizday))));
+  document.querySelectorAll('[data-flashcat]').forEach(el=>el.onclick=()=>startFlash(el.dataset.flashcat==="all"?allWords:allWords.filter(w=>w.cat===el.dataset.flashcat)));
+  document.querySelectorAll('[data-flashday]').forEach(el=>el.onclick=()=>startFlash(getWordsByDay(parseInt(el.dataset.flashday))));
+  document.querySelectorAll('[data-option]').forEach(el=>el.onclick=()=>{
+    if(quizState.selected!==null) return;
+    const i=parseInt(el.dataset.option), q=quizState.questions[quizState.index];
+    quizState.selected=i;
+    if(q.options[i].english===q.word.english) quizState.score++;
+    renderQuizView(document.getElementById('app'));
+    setTimeout(()=>{ quizState.index<quizState.questions.length-1?(quizState.index++,quizState.selected=null):quizState.finished=true; renderQuizView(document.getElementById('app')); },1300);
+  });
+  qs('[data-action="flipCard"]',el=>el.onclick=()=>{ flashState.flipped=!flashState.flipped; renderFlashView(document.getElementById('app')); });
+  qs('[data-action="flashLearning"]',el=>el.onclick=()=>{ flashState.index++;flashState.flipped=false; renderFlashView(document.getElementById('app')); });
+  qs('[data-action="flashGotIt"]',el=>el.onclick=()=>{ flashState.known++;flashState.index++;flashState.flipped=false; renderFlashView(document.getElementById('app')); });
+  qs('[data-action="retryQuiz"]',el=>el.onclick=()=>{ quizState={...quizState,index:0,score:0,selected:null,finished:false,questions:shuffle(quizState.questions).map(q=>({...q,options:shuffle(q.options)}))}; renderQuizView(document.getElementById('app')); });
+  qs('[data-action="quizHome"]',el=>el.onclick=()=>{ quizState={}; render(); });
+  qs('[data-action="retryFlash"]',el=>el.onclick=()=>{ flashState={...flashState,deck:shuffle(flashState.deck),index:0,flipped:false,known:0}; renderFlashView(document.getElementById('app')); });
+  qs('[data-action="flashHome"]',el=>el.onclick=()=>{ flashState={}; render(); });
+}
+
+function qs(sel,fn){ const el=document.querySelector(sel); if(el) fn(el); }
+
+render();
+</script>
+</body>
+</html>
